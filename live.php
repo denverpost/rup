@@ -135,7 +135,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    bindKey: {win: 'Ctrl-Alt-P',  mac: 'Command-Option-P'},
 		    exec: function(editor) {
 		    	var result = prompt('Source name:\n','');
-	            var link = ' <span class="source">—' + result + '</span>';
+	            var link = ' <span class="source">&mdash;' + result + '</span>';
 		        editor.session.insert(editor.getCursorPosition(), link)
 		    },
 		    readOnly: false
