@@ -63,7 +63,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		<div class="headerstyle">
 			<div class="row collapse" style="overflow:hidden;text-align:center;max-width:100%!important;">
 				<div class="large-12 columns">
-					<p style="margin:.25em auto;color:crimson;font-weight:bold;">LIVE EDIT — DO NOT FORGET TO SAVE</p>
+					<p style="margin:.25em auto;color:crimson;font-weight:bold;">LIVE EDIT &mdash; DO NOT FORGET TO SAVE</p>
 				</div>
 			</div>
 		</div>
