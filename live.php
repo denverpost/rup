@@ -5,11 +5,11 @@ ini_set('display_errors', 1);
 
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 
-if ($file != false && isset($_POST['editor_content'])) {
-	file_put_contents('./cache/'.$file,$links_processed);
+if ($file != false && isset($_POST['editor_html'])) {
+	file_put_contents('./cache/'.$file,html_entity_decode($_POST['editor_html']));
 }
 
-$editor_content = file_get_contents('./cache/'.$file);
+$editor_html = file_get_contents('./cache/'.$file);
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +71,7 @@ $editor_content = file_get_contents('./cache/'.$file);
 			<form id="editor" name="editor" method="post">
 				<div id="admin" class="row collapse" style="overflow:hidden;max-width:100%!important;">
 					<div class="large-6 columns">
-						<script type="text/plain" style="display:block;" id="editor_content"><?php echo $editor_content; ?></script>
+						<script type="text/plain" style="display:block;" id="editor_content"><?php echo $editor_html; ?></script>
 					</div>
 					<div class="large-6 columns">
 						<iframe src="<?php echo './cache/'.$file; ?>" id="editor_view"></iframe>
@@ -81,6 +81,7 @@ $editor_content = file_get_contents('./cache/'.$file);
 					<div class="large-6 large-centered columns" style="padding-top:1em;">
 						<input type="submit" value="Update" class="button" style="width:100%;text-align:center;" />
 					</div>
+					<input type="hidden" id="editor_html" name="editor_html" value="<?php echo htmlentities($editor_html); ?>" />
 				</div>
 			</form>
 			<?php } else { ?>
@@ -107,15 +108,54 @@ $editor_content = file_get_contents('./cache/'.$file);
 	</script>
 	<script src="./ace/ace.js" charset="utf-8"></script>
 	<script>
+		function htmlEntities(str) {
+			return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+		}
 	    var editor = ace.edit("editor_content");
 	    editor.setTheme("ace/theme/solarized_dark");
 	    editor.getSession().setMode("ace/mode/html");
 	    editor.getSession().setUseWrapMode(true);
+	    for (key in editor.keyBinding.$defaultHandler.commandKeyBinding) {
+		    if (key == "ctrl-l" && key == "command-l")
+		        delete editor.keyBinding.$defaultHandler.commandKeyBinding[key]
+		}
+	    editor.commands.addCommand({
+		    name: 'wrapWithLink',
+		    bindKey: {win: 'Ctrl-Alt-L',  mac: 'Command-Option-L'},
+		    exec: function(editor) {
+		    	var result = prompt('Paste link URL:\n','');
+	            var origText = editor.session.getTextRange(editor.getSelectionRange());
+	            var link = '<a href="' + result + '" title="' + result + '">' + origText + '</a>';
+		        editor.session.replace(editor.selection.getRange(), link);
+		    },
+		    readOnly: false
+		});
+		editor.commands.addCommand({
+		    name: 'insertSource',
+		    bindKey: {win: 'Ctrl-Alt-P',  mac: 'Command-Option-P'},
+		    exec: function(editor) {
+		    	var result = prompt('Source name:\n','');
+	            var link = ' <span class="source">—' + result + '</span>';
+		        editor.session.insert(editor.getCursorPosition(), link)
+		    },
+		    readOnly: false
+		});
+		editor.commands.addCommand({
+		    name: 'wrapNumber',
+		    bindKey: {win: 'Ctrl-Alt-K',  mac: 'Command-Option-K'},
+		    exec: function(editor) {
+	            var origText = editor.session.getTextRange(editor.getSelectionRange());
+	            var link = '<p class="number">' + origText + '</p>';
+		        editor.session.replace(editor.selection.getRange(), link);
+		    },
+		    readOnly: false
+		});
 	</script>
 	<script>
         $(document).ready(function(){
         	editor.getSession().on('change', function(e) {
 			    $("#editor_view").contents().find('html').html(editor.getValue());
+			    $("#editor_html").val(htmlEntities(editor.getValue()));
 			});
         });
 	</script>
