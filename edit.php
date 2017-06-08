@@ -61,7 +61,7 @@ function source_span($input) {
 			$source_name = $input;
 			break;
 	}
-	return ($source_name) ? sprintf(' <span class="source">— %s</span>',$source_name) : '';
+	return ($source_name) ? sprintf(' <span class="source">&mdash; %s</span>',$source_name) : '';
 }
 
 $link_count = 0;
