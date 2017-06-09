@@ -73,7 +73,7 @@ $files_list = array_reverse($files_list);
 				<div class="large-12 columns">
 					<h1>Edit or create a newsletter</h1>
 					<p>Select from the list to edit an existing newsletter.</p>
-					<p>Select a newsletter and input the date to create a new one. Then click to edit it.</p>
+					<p>Select a template and input the date to create a new one. Then click the created link to edit.</p>
 				</div>
 			</div>
 		</div>

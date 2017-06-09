@@ -112,8 +112,12 @@ $editor_html = file_get_contents('./cache/'.$file);
 			return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 		}
 	    var editor = ace.edit("editor_content");
-	    editor.setTheme("ace/theme/solarized_dark");
+	    editor.setTheme("ace/theme/monokai_bright");
 	    editor.getSession().setMode("ace/mode/html");
+	    ace.config.loadModule('ace/ext/language_tools');
+    	
+    	//editor.insertSnippet(snippetText);
+
 	    editor.getSession().setUseWrapMode(true);
 	    editor.setShowPrintMargin(false);
 	    for (key in editor.keyBinding.$defaultHandler.commandKeyBinding) {
@@ -121,8 +125,17 @@ $editor_html = file_get_contents('./cache/'.$file);
 		        delete editor.keyBinding.$defaultHandler.commandKeyBinding[key]
 		}
 	    editor.commands.addCommand({
+		    name: 'insertBlockQuote',
+		    bindKey: {win: 'Ctrl-Alt-B',  mac: 'Command-Ctrl-B'},
+		    exec: function(editor) {
+		    	var snippetText = '\n<blockquote>\n$0\n<p class="credit"></p>\n</blockquote>\n';
+		        editor.insertSnippet(snippetText);
+		    },
+		    readOnly: false
+		});
+	    editor.commands.addCommand({
 		    name: 'wrapWithLink',
-		    bindKey: {win: 'Ctrl-Alt-L',  mac: 'Command-Option-L'},
+		    bindKey: {win: 'Ctrl-Alt-L',  mac: 'Command-Ctrl-L'},
 		    exec: function(editor) {
 		    	var result = prompt('Paste link URL:\n','');
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
@@ -133,7 +146,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		});
 		editor.commands.addCommand({
 		    name: 'insertSource',
-		    bindKey: {win: 'Ctrl-Alt-P',  mac: 'Command-Option-P'},
+		    bindKey: {win: 'Ctrl-Alt-P',  mac: 'Command-Ctrl-P'},
 		    exec: function(editor) {
 		    	var result = prompt('Source name:\n','');
 	            var link = ' <span class="source">&mdash;' + result + '</span>';
@@ -143,7 +156,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		});
 		editor.commands.addCommand({
 		    name: 'wrapNumber',
-		    bindKey: {win: 'Ctrl-Alt-K',  mac: 'Command-Option-K'},
+		    bindKey: {win: 'Ctrl-Alt-K',  mac: 'Command-Ctrl-K'},
 		    exec: function(editor) {
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
 	            var link = '<p class="number">' + origText + '</p>';
