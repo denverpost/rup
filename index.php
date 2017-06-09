@@ -40,7 +40,7 @@ $files_list = array_reverse($files_list);
 	<link rel="stylesheet" type="text/css" href="//cdn.foundation5.zurb.com/foundation.css" />
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<style type="text/css">
-
+	th { font-size:1.2em; }
 	</style>
 	<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
 
@@ -105,11 +105,24 @@ $files_list = array_reverse($files_list);
 									</div>
 								</div>
 							<?php } else { ?>
-								<ul>
-								<?php foreach($files_list as $file) { ?>
-									<li><a href="edit.php?file=<?php echo $file; ?>"><?php echo $file; ?></a></li>
-								<?php } ?>
-								</ul>
+								<table style="width:100%;">
+									<thead>
+										<tr>
+											<th width="*">Filename</th>
+											<th width="20%" style="text-align:center;">Initial Setup</th>
+											<th width="20%" style="text-align:center;">Live Editor</th>
+										</tr>
+									</thead>
+									<tbody>
+									<?php foreach($files_list as $file) { ?>
+										<tr>
+											<td><strong style="font-size:1.2em;"><?php echo $file; ?></strong></td>
+											<td style="text-align:center;"><a href="edit.php?file=<?php echo $file; ?>"><img style="width:2.25em;" src="./img/icon-setup.png" alt="Edit Settings" /></a></td>
+											<td style="text-align:center;"><a href="live.php?file=<?php echo $file; ?>"><img style="width:2.25em;" src="./img/icon-edit.png" alt="Live Edit" /></a></td>
+										</tr>
+									<?php } ?>
+									</tbody>
+								</table>
 							<?php } ?>
 					</fieldset>
 				</div>
