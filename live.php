@@ -115,6 +115,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 	    editor.setTheme("ace/theme/solarized_dark");
 	    editor.getSession().setMode("ace/mode/html");
 	    editor.getSession().setUseWrapMode(true);
+	    editor.setShowPrintMargin(false);
 	    for (key in editor.keyBinding.$defaultHandler.commandKeyBinding) {
 		    if (key == "ctrl-l" && key == "command-l")
 		        delete editor.keyBinding.$defaultHandler.commandKeyBinding[key]
