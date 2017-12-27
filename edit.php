@@ -18,7 +18,7 @@ $bylines = array(
                     <br /><a href="mailto:dschneider@denverpost.com?subject=Roundup%20Feedback" title="Email Daniel J. Schneider @ The Denver Post" style="border-bottom: none;">dschneider@denverpost.com</a> / <a href="http://twitter.com/schneidan" title="@schneidan on Twitter" style="border-bottom: none;">@schneidan</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
                   	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:dschneider@denverpost.com?subject=Roundup Feedback">email me at dschneider@denverpost.com</a> or <a href="http://twitter.com/schneidan">yell at me on Twitter</a>.</p>',
-        'playlist' => '<p>Now that it\'s the time of year to pack up the Jeep (or Subaru, because Colorado) and hit the high elevations, all the auditory stimulation you need beside wind, birds and bees is on <a href="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8" title="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8">our Mile High Roundup Spotify playlist</a>. Every Song of the Day is in there, and it\'s getting very close to <em>24 hours long</em>! Trust us, your favorite new songs are in there — you just have to press play to discover them.</p>')
+        'playlist' => '<p>Whether you\'re packing the car for a week-long road trip or just sliding on your headphones for a walk in the neighborhood, all the auditory stimulation you need is on <a href="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8" title="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8">our Mile High Roundup Spotify playlist</a>. Every Song of the Day is in there, now with more than <em>30 hours of music</em>! Do yourself a favor: click Shuffle and let the some great songs wash over you.</p>')
 	);
 
 function source_span($input) {
@@ -100,9 +100,9 @@ if ($blank == true || !empty($_POST)) {
 		$lubcheck = '';
 	}
 	$intro_text = isset($_POST['intro_text']) ? $_POST['intro_text'] : false;
-	$playlist_text = isset($_POST['playlist_text']) ? $_POST['playlist_text'] : ( ( ($author != false) && isset($bylines[$author]['playlist']) ) ? $bylines[$author]['playlist'] : false );
+	$playlist_text = ( isset($_POST['playlist_text']) && strlen($_POST['playlist_text']) > 1 ) ? $_POST['playlist_text'] : ( ( ($author != false) && isset($bylines[$author]['playlist']) ) ? $bylines[$author]['playlist'] : false );
 	$sotd_text = isset($_POST['sotd_text']) ? $_POST['sotd_text'] : false;
-	$correx_text = isset($_POST['correx_text']) ? $_POST['correx_text'] : ( ( ($author != false) && isset($bylines[$author]) && isset($bylines[$author]['correx']) ) ? $bylines[$author]['correx'] : false );
+	$correx_text = ( isset($_POST['correx_text']) && strlen($_POST['correx_text']) > 1 ) ? $_POST['correx_text'] : ( ( ($author != false) && isset($bylines[$author]) && isset($bylines[$author]['correx']) ) ? $bylines[$author]['correx'] : false );
 
 	$template_raw = ($template) ? file_get_contents('./'.$template) : false;
 
@@ -230,7 +230,7 @@ if ($blank == true || !empty($_POST)) {
 	<title>ROUNDUP link processor</title>
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" type="text/css" href="//cdn.foundation5.zurb.com/foundation.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css" />
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<style type="text/css">
 

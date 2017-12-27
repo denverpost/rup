@@ -37,7 +37,7 @@ $files_list = array_reverse($files_list);
 	<title>ROUNDUP files</title>
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" type="text/css" href="//cdn.foundation5.zurb.com/foundation.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css" />
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<style type="text/css">
 	th { font-size:1.2em; }

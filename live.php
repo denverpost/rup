@@ -17,7 +17,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 	<title>ROUNDUP LIVE EDITOR</title>
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" type="text/css" href="//cdn.foundation5.zurb.com/foundation.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css" />
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<style type="text/css">
 	#editor_content,
@@ -149,7 +149,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    bindKey: {win: 'Ctrl-Alt-P',  mac: 'Command-Ctrl-P'},
 		    exec: function(editor) {
 		    	var result = prompt('Source name:\n','');
-	            var link = ' <span class="source">&mdash;' + result + '</span>';
+	            var link = ' <span class="source">&mdash; ' + result + '</span>';
 		        editor.session.insert(editor.getCursorPosition(), link)
 		    },
 		    readOnly: false
