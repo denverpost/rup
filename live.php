@@ -24,7 +24,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 	#editor_view {
 		border:1px solid #ccc;
 		width:100%;
-		height:720px;
+		height:900px;
 		overflow-y:scroll;
 		overflow-x:hidden;
 	}
