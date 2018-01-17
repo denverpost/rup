@@ -18,7 +18,7 @@ $bylines = array(
                     <br /><a href="mailto:dschneider@denverpost.com?subject=Roundup%20Feedback" title="Email Daniel J. Schneider @ The Denver Post" style="border-bottom: none;">dschneider@denverpost.com</a> / <a href="http://twitter.com/schneidan" title="@schneidan on Twitter" style="border-bottom: none;">@schneidan</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
                   	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:dschneider@denverpost.com?subject=Roundup Feedback">email me at dschneider@denverpost.com</a> or <a href="http://twitter.com/schneidan">yell at me on Twitter</a>.</p>',
-        'playlist' => '<p><strong>Follow our Spotify playlist for an endless fountain of tunes: <a href="http://enews.denverpost.com/q/ooNJ7_PjvFJxizqwJn7JblNPkeFU5voLse94S-zCFdqr8XIFp3DEJ-UX3ZFw" title="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8" target="_blank">Click this link</a> or search "Mile High Roundup" in your app.</strong></p>')
+        'playlist' => '<p><strong>Follow our Spotify playlist for an endless fountain of tunes: <a href="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8" title="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8" target="_blank">Click this link</a> or search "Mile High Roundup" in your app.</strong></p>')
 	);
 
 function source_span($input) {
