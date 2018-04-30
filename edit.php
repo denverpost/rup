@@ -11,14 +11,22 @@ $bylines = array(
 		'byline' => '<p class="byline">By Eric Lubbers
 					<br /><a href="mailto:;elubbers@denverpost.com?subject=Roundup%20Feedback" title="Email Eric Lubbers @ The Denver Post" style="border-bottom: none;">elubbers@denverpost.com</a> / <a href="http://twitter.com/brofax" title="@brofax on Twitter" style="border-bottom: none;">@brofax</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
-					<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:elubbers@denverpost.com?subject=Roundup Feedback">email me at elubbers@denverpost.com</a> or <a href="http://twitter.com/brofax">yell at me on Twitter</a>.</p>',
-        'playlist' => '<p><strong>Follow our Spotify playlist for an endless fountain of tunes: <a href="http://enews.denverpost.com/q/ooNJ7_PjvFJxizqwJn7JblNPkeFU5voLse94S-zCFdqr8XIFp3DEJ-UX3ZFw" title="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8" target="_blank">Click this link</a> or search "Mile High Roundup" in your app.</strong></p>'),
+					<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:elubbers@denverpost.com?subject=Roundup Feedback">email me at elubbers@denverpost.com</a> or <a href="http://twitter.com/brofax">yell at me on Twitter</a>.</p>'),
 	'schneider' => array(
 		'byline' => '<p class="byline">By Daniel J. Schneider
                     <br /><a href="mailto:dschneider@denverpost.com?subject=Roundup%20Feedback" title="Email Daniel J. Schneider @ The Denver Post" style="border-bottom: none;">dschneider@denverpost.com</a> / <a href="http://twitter.com/schneidan" title="@schneidan on Twitter" style="border-bottom: none;">@schneidan</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
-                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:dschneider@denverpost.com?subject=Roundup Feedback">email me at dschneider@denverpost.com</a> or <a href="http://twitter.com/schneidan">yell at me on Twitter</a>.</p>',
-        'playlist' => '<p><strong>Follow our Spotify playlist for an endless fountain of tunes: <a href="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8" title="http://open.spotify.com/user/ericjlubbers/playlist/0qyRwyDlwECmsGb3JwPeE8" target="_blank">Click this link</a> or search "Mile High Roundup" in your app.</strong></p>')
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:dschneider@denverpost.com?subject=Roundup Feedback">email me at dschneider@denverpost.com</a> or <a href="http://twitter.com/schneidan">yell at me on Twitter</a>.</p>'),
+	'gonzalez' => array(
+		'byline' => '<p class="byline">By Susan Gonzalez
+                    <br /><a href="mailto:sgonzalez@denverpost.com?subject=Roundup%20Feedback" title="Email Susan Gonzalez @ The Denver Post" style="border-bottom: none;">sgonzalez@denverpost.com</a> / <a href="http://twitter.com/TheNewsan" title="@TheNewsan on Twitter" style="border-bottom: none;">@TheNewsan</a></p>',
+		'correx' => '<h2>Get in Touch</h2>
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:sgonzalez@denverpost.com?subject=Roundup Feedback">email me at sgonzalez@denverpost.com</a> or <a href="http://twitter.com/TheNewsan">yell at me on Twitter</a>.</p>'),
+	'crawford' => array(
+		'byline' => '<p class="byline">By Adrian Crawford
+                    <br /><a href="mailto:acrawford@denverpost.com?subject=Roundup%20Feedback" title="Email Adrian Crawford @ The Denver Post" style="border-bottom: none;">acrawford@denverpost.com</a> / <a href="http://twitter.com/Crawf33" title="@Crawf33 on Twitter" style="border-bottom: none;">@Crawf33</a></p>',
+		'correx' => '<h2>Get in Touch</h2>
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:acrawford@denverpost.com?subject=Roundup Feedback">email me at acrawford@denverpost.com</a> or <a href="http://twitter.com/Crawf33">yell at me on Twitter</a>.</p>')
 	);
 
 function source_span($input) {
@@ -82,8 +90,6 @@ if (empty($_POST) && $file != false && file_exists('./cache/'.$file)) {
 		$intro_text_file = $intro_matches[1];
 		preg_match('/<!--{{SOTD}}-->(.*?)<!--{{\/SOTD}}-->/s', $links_processed, $sotd_matches);
 		$sotd_text_file = $sotd_matches[1];
-		preg_match('/<!--{{PLAYLIST}}-->(.*?)<!--{{\/PLAYLIST}}-->/s', $links_processed, $playlist_matches);
-		$playlist_text_file = $playlist_matches[1];
 		preg_match('/<!--{{CORREX}}-->(.*?)<!--{{\/CORREX}}-->/s', $links_processed, $correx_matches);
 		$correx_text_file = $correx_matches[1];
 	} else {
@@ -100,7 +106,6 @@ if ($blank == true || !empty($_POST)) {
 		$lubcheck = '';
 	}
 	$intro_text = isset($_POST['intro_text']) ? $_POST['intro_text'] : false;
-	$playlist_text = ( isset($_POST['playlist_text']) && strlen($_POST['playlist_text']) > 1 ) ? $_POST['playlist_text'] : ( ( ($author != false) && isset($bylines[$author]['playlist']) ) ? $bylines[$author]['playlist'] : false );
 	$sotd_text = isset($_POST['sotd_text']) ? $_POST['sotd_text'] : false;
 	$correx_text = ( isset($_POST['correx_text']) && strlen($_POST['correx_text']) > 1 ) ? $_POST['correx_text'] : ( ( ($author != false) && isset($bylines[$author]) && isset($bylines[$author]['correx']) ) ? $bylines[$author]['correx'] : false );
 
@@ -154,7 +159,7 @@ if ($blank == true || !empty($_POST)) {
 		$inputfile = preg_replace('/<div style="padding-top:10px; padding-bottom:0px; padding-left:24px; font-family: \'Open Sans\', \'Helvetica Neue\', Arial, sans-serif; color: #444; font-size:26px; font-weight:300">(.*?)<\/div>/', "<h2>$1</h2>", $inputfile);
 
 		// Strip styling from link tags
-		$inputfile = str_replace('<a style="vertical-align: middle; padding-left: 10px; padding-right: 12px; text-decoration: none;" href', '<a href', $inputfile);
+		$inputfile = str_replace('<a style="vertical-align: middle; padding-left: 10px; padding-right: 12px; text-decoration: none;" href', '<a style="border-bottom:1px dashed;padding:2px 0;text-decoration:none;color:#13618D;font-weight:bold;" href', $inputfile);
 
 		// Change ugly divs to simple paragraphs
 		$inputfile = str_replace(' <div style="padding-left: 24px; padding-top: 8px; position: relative; font-size: 13px;">  <a', '<p>+ <a', $inputfile);
@@ -216,7 +221,6 @@ if ($blank == true || !empty($_POST)) {
 		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->'.$links_processed.'<!--{{/CONTENT}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{INTRO}}-->(.*?)<!--{{\/INTRO}}-->/', '<!--{{INTRO}}-->'.$intro_text.'<!--{{/INTRO}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{SOTD}}-->(.*?)<!--{{\/SOTD}}-->/', '<!--{{SOTD}}-->'.$sotd_text.'<!--{{/SOTD}}-->', $template_raw);
-		$template_raw = preg_replace('/<!--{{PLAYLIST}}-->(.*?)<!--{{\/PLAYLIST}}-->/', '<!--{{PLAYLIST}}-->'.$playlist_text.'<!--{{/PLAYLIST}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{CORREX}}-->(.*?)<!--{{\/CORREX}}-->/', '<!--{{CORREX}}-->'.$correx_text.'<!--{{/CORREX}}-->', $template_raw);
 		$links_processed = $template_raw;
 	}
@@ -328,10 +332,6 @@ if ($blank == true || !empty($_POST)) {
 							<fieldset>
 								<legend> SotD </legend>
 								<textarea name="sotd_text" style="width:100%;height:250px;"><?php echo ($sotd_text_file != false) ? $sotd_text_file : ''; ?></textarea>
-							</fieldset>
-							<fieldset>
-								<legend> Playlist Promo (overrides author default)</legend>
-								<textarea name="playlist_text" style="width:100%;height:250px;"><?php echo ($playlist_text_file != false) ? $playlist_text_file : ''; ?></textarea>
 							</fieldset>
 							<fieldset>
 								<legend> CX chunk (overrides author default) </legend>

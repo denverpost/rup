@@ -28,6 +28,7 @@ if ($handle = opendir('./cache')) {
     }
     closedir($handle);
 }
+sort($files_list, SORT_NATURAL);
 $files_list = array_reverse($files_list);
 
 ?>

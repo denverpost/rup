@@ -24,7 +24,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 	#editor_view {
 		border:1px solid #ccc;
 		width:100%;
-		height:900px;
+		height:850px;
 		overflow-y:scroll;
 		overflow-x:hidden;
 	}
@@ -77,9 +77,14 @@ $editor_html = file_get_contents('./cache/'.$file);
 						<iframe src="<?php echo './cache/'.$file; ?>" id="editor_view"></iframe>
 					</div>
 				</div>
-				<div class="row" style="overflow:hidden;max-width:90%!important;">
-					<div class="large-6 large-centered columns" style="padding-top:1em;">
-						<input type="submit" value="Update" class="button" style="width:100%;text-align:center;" />
+				<div class="row" style="overflow:hidden;max-width:60%!important;">
+					<div class="large-6 columns" style="padding-top:1em;">
+						<a href="<?php echo './download.php?filename='.str_replace('.html','',$file); ?>" target="_blank">
+							<button class="button" style="width:100%;text-align:center;">DOWNLOAD FILE</button>
+						</a>
+					</div>
+					<div class="large-6 columns" style="padding-top:1em;">
+						<input type="submit" value="UPDATE SAVED FILE" class="button" style="width:100%;text-align:center;" />
 					</div>
 					<input type="hidden" id="editor_html" name="editor_html" value="<?php echo htmlentities($editor_html); ?>" />
 				</div>
@@ -93,14 +98,6 @@ $editor_html = file_get_contents('./cache/'.$file);
 			</div>
 		<?php } ?>
 	</div>
-
-	<footer>
-	    <div class="row collapse" style="overflow:hidden;text-align:center;max-width:100%!important;">
-			<div class="large-12 columns">
-				<p style="text-align: center">Copyright &copy; 2017, The Denver Post</p>
-			</div>
-	    </div>
-	</footer>
 
 	<script src="http://extras.denverpost.com/foundation/js/foundation.min.js"></script>
 	<script>
@@ -128,7 +125,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    name: 'insertBlockQuote',
 		    bindKey: {win: 'Ctrl-Alt-B',  mac: 'Command-Ctrl-B'},
 		    exec: function(editor) {
-		    	var snippetText = '\n<blockquote>\n$0\n<p class="credit"></p>\n</blockquote>\n';
+		    	var snippetText = '\n<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>\n</blockquote>\n';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
@@ -139,7 +136,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    exec: function(editor) {
 		    	var result = prompt('Paste link URL:\n','');
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
-	            var link = '<a href="' + result + '" title="' + result + '">' + origText + '</a>';
+	            var link = '<a style="border-bottom:1px dashed;padding:2px 0;text-decoration:none;color:#13618D;font-weight:bold;" href="' + result + '" title="' + result + '">' + origText + '</a>';
 		        editor.session.replace(editor.selection.getRange(), link);
 		    },
 		    readOnly: false
@@ -149,7 +146,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    bindKey: {win: 'Ctrl-Alt-P',  mac: 'Command-Ctrl-P'},
 		    exec: function(editor) {
 		    	var result = prompt('Source name:\n','');
-	            var link = ' <span class="source">&mdash; ' + result + '</span>';
+	            var link = ' <span style="color:#13618D;font-weight:bold;text-decoration:none;">&mdash; ' + result + '</span>';
 		        editor.session.insert(editor.getCursorPosition(), link)
 		    },
 		    readOnly: false
@@ -159,7 +156,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    bindKey: {win: 'Ctrl-Alt-K',  mac: 'Command-Ctrl-K'},
 		    exec: function(editor) {
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
-	            var link = '<p class="number">' + origText + '</p>';
+	            var link = '<p style="text-align:center;font-size:42px;font-weight:bold;margin:0;">' + origText + '</p>';
 		        editor.session.replace(editor.selection.getRange(), link);
 		    },
 		    readOnly: false
