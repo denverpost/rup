@@ -30,6 +30,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 	}
 	#editor_view { margin-left:3px; }
 	#editor_content { margin-right:3px; }
+	#editor_content textarea { white-space:nowrap!important; }
 	</style>
 
 	<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
@@ -78,12 +79,17 @@ $editor_html = file_get_contents('./cache/'.$file);
 					</div>
 				</div>
 				<div class="row" style="overflow:hidden;max-width:60%!important;">
-					<div class="large-6 columns" style="padding-top:1em;">
-						<a href="<?php echo './download.php?filename='.str_replace('.html','',$file); ?>" target="_blank">
+					<div class="large-4 columns" style="padding-top:1em;">
+						<a href="#" data-reveal-id="myModal">
+							<button class="button" style="width:100%;text-align:center;">HOTKEY REMINDER</button>
+						</a>
+					</div>
+					<div class="large-4 columns" style="padding-top:1em;">
+						<a href="<?php echo 'download.php?filename='.str_replace('.html','',$file); ?>" target="_blank">
 							<button class="button" style="width:100%;text-align:center;">DOWNLOAD FILE</button>
 						</a>
 					</div>
-					<div class="large-6 columns" style="padding-top:1em;">
+					<div class="large-4 columns" style="padding-top:1em;">
 						<input type="submit" value="UPDATE SAVED FILE" class="button" style="width:100%;text-align:center;" />
 					</div>
 					<input type="hidden" id="editor_html" name="editor_html" value="<?php echo htmlentities($editor_html); ?>" />
@@ -99,6 +105,21 @@ $editor_html = file_get_contents('./cache/'.$file);
 		<?php } ?>
 	</div>
 
+	<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+		<h2 id="modalTitle">AWESOME HOTKEYS!</h2>
+		<p class="lead">These hotkeys will help you bang out a Roundup lickety-split!</p>
+		<ul>
+			<li><strong>Ctrl-Alt-B / Command-Ctrl-B</strong>: Insert a &lt;blockquote&gt; template; highlighted text will be wrapped, otherwise a blank template will be inserted with your cursor placed appropriately.</li>
+			<li><strong>Ctrl-Alt-G / Command-Ctrl-G</strong>: Insert a suitable tag for an animated GIF!</li>
+			<li><strong>Ctrl-Alt-I / Command-Ctrl-I</strong>: Insert an image template snippet.</li>
+			<li><strong>Ctrl-Alt-L / Command-Ctrl-L</strong>: Wrap the selected text with a link (&lt;a&gt;) tag; you will be prompted to past ein the URL you want.</li>
+			<li><strong>Ctrl-Alt-P / Command-Ctrl-P</strong>: Insert a source tag (like in What We're Reading); highlighted text will be wrapped, otherwise you will be promted to type or paste a source name.</li>
+			<li><strong>Ctrl-Alt-K / Command-Ctrl-K</strong>: Insert a By The Numbers-type number template; highlighted text will be wrapped, otherwise a blank tag will be inserted with your cursor ready to type the number.</li>
+
+		</ul>
+		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
 	<script src="http://extras.denverpost.com/foundation/js/foundation.min.js"></script>
 	<script>
 		$(document).foundation();
@@ -106,7 +127,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 	<script src="./ace/ace.js" charset="utf-8"></script>
 	<script>
 		function htmlEntities(str) {
-			return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+			return String(str).replace(/\u00A0/g, '&nbsp;').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 		}
 	    var editor = ace.edit("editor_content");
 	    editor.setTheme("ace/theme/monokai_bright");
@@ -125,7 +146,31 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    name: 'insertBlockQuote',
 		    bindKey: {win: 'Ctrl-Alt-B',  mac: 'Command-Ctrl-B'},
 		    exec: function(editor) {
-		    	var snippetText = '\n<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>\n</blockquote>\n';
+		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
+		    	if (origText == '') {
+			    	var snippetText = '\n<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n</blockquote>\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>\n';
+			        editor.insertSnippet(snippetText);
+		        } else {
+		            var link = '\n<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n' + origText + '\n</blockquote>\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>\n';
+			        editor.session.replace(editor.selection.getRange(), link);
+			    }
+		    },
+		    readOnly: false
+		});
+		editor.commands.addCommand({
+		    name: 'insertGif',
+		    bindKey: {win: 'Ctrl-Alt-G',  mac: 'Command-Ctrl-G'},
+		    exec: function(editor) {
+		    	var snippetText = '\n<center><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:350px;font-size: 15px; line-height: 100%; color: #555555;display:block;"></center>\n';
+		        editor.insertSnippet(snippetText);
+		    },
+		    readOnly: false
+		});
+		editor.commands.addCommand({
+		    name: 'insertImage',
+		    bindKey: {win: 'Ctrl-Alt-I',  mac: 'Command-Ctrl-I'},
+		    exec: function(editor) {
+		    	var snippetText = '\n<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="[[STORY_LINK]]" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n<p style="text-align:right;font-size:14px;font-style: italic;">[[CREDIT]]</p>\n<p style="font-style:italic;font-size:14px;">[[CUTLINE]]</p>\n';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
@@ -145,9 +190,15 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    name: 'insertSource',
 		    bindKey: {win: 'Ctrl-Alt-P',  mac: 'Command-Ctrl-P'},
 		    exec: function(editor) {
-		    	var result = prompt('Source name:\n','');
-	            var link = ' <span style="color:#13618D;font-weight:bold;text-decoration:none;">&mdash; ' + result + '</span>';
-		        editor.session.insert(editor.getCursorPosition(), link)
+		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
+		    	if (origText == '') {
+			    	var result = prompt('Source name:\n','');
+		            var link = ' <span style="color:#13618D;font-weight:bold;text-decoration:none;">&mdash; ' + result + '</span>';
+			        editor.session.insert(editor.getCursorPosition(), link)
+			    } else {
+		            var snippetText = ' <span style="color:#13618D;font-weight:bold;text-decoration:none;">&mdash; ' + origText + '</span>';
+			        editor.session.replace(editor.selection.getRange(), snippetText);
+			    }
 		    },
 		    readOnly: false
 		});
@@ -156,8 +207,13 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    bindKey: {win: 'Ctrl-Alt-K',  mac: 'Command-Ctrl-K'},
 		    exec: function(editor) {
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
-	            var link = '<p style="text-align:center;font-size:42px;font-weight:bold;margin:0;">' + origText + '</p>';
-		        editor.session.replace(editor.selection.getRange(), link);
+	            if (origText == '') {
+	            	var snippetText = '<p style="text-align:center;font-size:42px;font-weight:bold;margin:0;">$0</p>\n';
+			        editor.insertSnippet(snippetText);
+	            } else {
+		            var link = '<p style="text-align:center;font-size:42px;font-weight:bold;margin:0;">' + origText + '</p>';
+			        editor.session.replace(editor.selection.getRange(), link);
+			    }
 		    },
 		    readOnly: false
 		});

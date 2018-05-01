@@ -8,25 +8,25 @@ require_once('./format.php');
 
 $bylines = array(
 	'lubbers' => array(
-		'byline' => '<p class="byline">By Eric Lubbers
-					<br /><a href="mailto:;elubbers@denverpost.com?subject=Roundup%20Feedback" title="Email Eric Lubbers @ The Denver Post" style="border-bottom: none;">elubbers@denverpost.com</a> / <a href="http://twitter.com/brofax" title="@brofax on Twitter" style="border-bottom: none;">@brofax</a></p>',
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Eric Lubbers
+					<br /><a href="mailto:;elubbers@denverpost.com?subject=Roundup%20Feedback" title="Email Eric Lubbers @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">elubbers@denverpost.com</a> / <a href="http://twitter.com/brofax" title="@brofax on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;>@brofax</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
-					<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:elubbers@denverpost.com?subject=Roundup Feedback">email me at elubbers@denverpost.com</a> or <a href="http://twitter.com/brofax">yell at me on Twitter</a>.</p>'),
+					<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:elubbers@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at elubbers@denverpost.com</a> or <a href="http://twitter.com/brofax" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
 	'schneider' => array(
-		'byline' => '<p class="byline">By Daniel J. Schneider
-                    <br /><a href="mailto:dschneider@denverpost.com?subject=Roundup%20Feedback" title="Email Daniel J. Schneider @ The Denver Post" style="border-bottom: none;">dschneider@denverpost.com</a> / <a href="http://twitter.com/schneidan" title="@schneidan on Twitter" style="border-bottom: none;">@schneidan</a></p>',
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Daniel J. Schneider
+                    <br /><a href="mailto:dschneider@denverpost.com?subject=Roundup%20Feedback" title="Email Daniel J. Schneider @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">dschneider@denverpost.com</a> / <a href="http://twitter.com/schneidan" title="@schneidan on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;>@schneidan</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
-                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:dschneider@denverpost.com?subject=Roundup Feedback">email me at dschneider@denverpost.com</a> or <a href="http://twitter.com/schneidan">yell at me on Twitter</a>.</p>'),
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:dschneider@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at dschneider@denverpost.com</a> or <a href="http://twitter.com/schneidan" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
 	'gonzalez' => array(
-		'byline' => '<p class="byline">By Susan Gonzalez
-                    <br /><a href="mailto:sgonzalez@denverpost.com?subject=Roundup%20Feedback" title="Email Susan Gonzalez @ The Denver Post" style="border-bottom: none;">sgonzalez@denverpost.com</a> / <a href="http://twitter.com/TheNewsan" title="@TheNewsan on Twitter" style="border-bottom: none;">@TheNewsan</a></p>',
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Susan Gonzalez
+                    <br /><a href="mailto:sgonzalez@denverpost.com?subject=Roundup%20Feedback" title="Email Susan Gonzalez @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">sgonzalez@denverpost.com</a> / <a href="http://twitter.com/TheNewsan" title="@TheNewsan on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;>@TheNewsan</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
-                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:sgonzalez@denverpost.com?subject=Roundup Feedback">email me at sgonzalez@denverpost.com</a> or <a href="http://twitter.com/TheNewsan">yell at me on Twitter</a>.</p>'),
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:sgonzalez@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at sgonzalez@denverpost.com</a> or <a href="http://twitter.com/TheNewsan" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
 	'crawford' => array(
-		'byline' => '<p class="byline">By Adrian Crawford
-                    <br /><a href="mailto:acrawford@denverpost.com?subject=Roundup%20Feedback" title="Email Adrian Crawford @ The Denver Post" style="border-bottom: none;">acrawford@denverpost.com</a> / <a href="http://twitter.com/Crawf33" title="@Crawf33 on Twitter" style="border-bottom: none;">@Crawf33</a></p>',
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Adrian Crawford
+                    <br /><a href="mailto:acrawford@denverpost.com?subject=Roundup%20Feedback" title="Email Adrian Crawford @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">acrawford@denverpost.com</a> / <a href="http://twitter.com/Crawf33" title="@Crawf33 on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;>@Crawf33</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
-                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:acrawford@denverpost.com?subject=Roundup Feedback">email me at acrawford@denverpost.com</a> or <a href="http://twitter.com/Crawf33">yell at me on Twitter</a>.</p>')
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:acrawford@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at acrawford@denverpost.com</a> or <a href="http://twitter.com/Crawf33" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>')
 	);
 
 function source_span($input) {
@@ -69,12 +69,12 @@ function source_span($input) {
 			$source_name = $input;
 			break;
 	}
-	return ($source_name) ? sprintf(' <span class="source">&mdash; %s</span>',$source_name) : '';
+	return ($source_name) ? sprintf(' <span style="color:#13618D;font-weight:bold;text-decoration:none;">&mdash; %s</span>',$source_name) : '';
 }
 
 $link_count = 0;
-$schcheck = '';
-$lubcheck = 'checked';
+$schcheck = 'checked';
+$lubcheck = $goncheck = $cracheck= '';
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 $links_processed = $input_text = $blank = $byline_text_file = $content_text_file = $intro_text_file = $sotd_text_file = $playlist_text_file = $correx_text_file = false;
 
@@ -83,15 +83,15 @@ if (empty($_POST) && $file != false && file_exists('./cache/'.$file)) {
 	if ($length>1) {
 		$links_processed = file_get_contents('./cache/'.$file);
 		preg_match('/<!--{{BYLINE}}-->(.*?)<!--{{\/BYLINE}}-->/s', $links_processed, $byline_matches);
-		$byline_text_file = $byline_matches[1];
+		$byline_text_file = (isset($byline_matches[1])) ? $byline_matches[1] : false;
 		preg_match('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/s', $links_processed, $content_matches);
-		$content_text_file = $content_matches[1];
+		$content_text_file = (isset($content_matches[1])) ? $content_matches[1] : false;
 		preg_match('/<!--{{INTRO}}-->(.*?)<!--{{\/INTRO}}-->/s', $links_processed, $intro_matches);
-		$intro_text_file = $intro_matches[1];
+		$intro_text_file = (isset($intro_matches[1])) ? $intro_matches[1] : false;
 		preg_match('/<!--{{SOTD}}-->(.*?)<!--{{\/SOTD}}-->/s', $links_processed, $sotd_matches);
-		$sotd_text_file = $sotd_matches[1];
+		$sotd_text_file = (isset($sotd_matches[1])) ? $sotd_matches[1] : false;
 		preg_match('/<!--{{CORREX}}-->(.*?)<!--{{\/CORREX}}-->/s', $links_processed, $correx_matches);
-		$correx_text_file = $correx_matches[1];
+		$correx_text_file = (isset($correx_matches[1])) ? $correx_matches[1] : false;
 	} else {
 		$blank = true;
 	}
@@ -101,9 +101,17 @@ if ($blank == true || !empty($_POST)) {
 	$template = isset($_POST['templates']) ? 'template-'.$_POST['templates'].'.html' : false;
 	$author = isset($_POST['authors']) ? $_POST['authors'] : false;
 	$byline_text = ($author != false) ? $bylines[$author]['byline'] : '';
-	if ($author = 'schneider') {
-		$schcheck = 'checked';
-		$lubcheck = '';
+	if ($author == 'lubbers') {
+		$schcheck = '';
+		$lubcheck = 'checked';
+	}
+	if ($author == 'gonzalez') {
+		$schcheck = '';
+		$goncheck = 'checked';
+	}
+	if ($author == 'crawford') {
+		$schcheck = '';
+		$cracheck = 'checked';
 	}
 	$intro_text = isset($_POST['intro_text']) ? $_POST['intro_text'] : false;
 	$sotd_text = isset($_POST['sotd_text']) ? $_POST['sotd_text'] : false;
@@ -213,7 +221,7 @@ if ($blank == true || !empty($_POST)) {
 		$links_format = new Format;
 		$links_processed = $links_format->HTML($links_processed);
 		$links_processed = preg_replace('/(.*?)<\/div>(.*?)<\/body><\/html>/i', '', $links_processed);
-		$links_processed = preg_replace('/<span class="source">(.*?)<\/span><\/a>/i', '</a>. <span class="source">$1</span>', $links_processed);
+		$links_processed = preg_replace('/<span style="color:#13618D;font-weight:bold;text-decoration:none;">(.*?)<\/span><\/a>/i', '</a>. <span style="color:#13618D;font-weight:bold;text-decoration:none;">$1</span>', $links_processed);
 
 	}
 	if ($template) {
@@ -272,7 +280,8 @@ if ($blank == true || !empty($_POST)) {
 				<div class="large-9 columns">
 					<h1>Process you some Roundup links</h1>
 					<p>Outputs some unfinished (but way more finished) Roundup code from a OneTab page source</p>
-					<p>Get source from your OneTab page: right-click and select View Source (also: CTRL+U or CMD+OPTION+U); CTRL+A to select all, CTRL+C to copy, CTRL+V to paste.</p>
+					<p>NOTE: Use full HTML in the Intro, SotD, etc., as you want it to appear.</p>
+					<p><span style="color:red;font-weight:bold">IMPORTANT:</span> You must click the CREATE button at the bottom of the left-hand column before attempting to COPY AS HTML or EDIT LIVE.</p>
 				</div>
 			</div>
 		</div>
@@ -280,14 +289,49 @@ if ($blank == true || !empty($_POST)) {
 			<form id="roundupraw" name="roundupraw" method="post">
 				<div class="large-6 columns">
 					<fieldset>
+						<legend> Options </legend>
+							<fieldset>
+								<legend> Template </legend>
+								<input type="radio" name="templates" value="roundup" checked> Mile High Roundup
+							</fieldset>
+							<fieldset>
+								<legend> Author </legend>
+								<?php if (!$byline_text_file) { ?>
+								<input type="radio" name="authors" value="schneider" <?php echo $schcheck; ?>> Daniel J. Schneider<br />
+								<input type="radio" name="authors" value="lubbers" <?php echo $lubcheck; ?>> Eric Lubbers<br />
+								<input type="radio" name="authors" value="gonzalez" <?php echo $goncheck; ?>> Susan Gonzalez<br />
+								<input type="radio" name="authors" value="crawford" <?php echo $cracheck; ?>> Adrian Crawford
+								<?php } else { ?>
+								<textarea name="intro_text" style="width:100%;height:250px;"><?php echo $byline_text_file; ?></textarea>
+								<?php } ?>
+							</fieldset>
+							<fieldset>
+								<legend> Intro </legend>
+								<textarea name="intro_text" style="width:100%;height:200px;"><?php echo ($intro_text_file != false) ? $intro_text_file : ''; ?></textarea>
+							</fieldset>
+							<fieldset>
+								<a href="javascript:populateSOTD();" id="sotd_text_button" style="font-style:italic;font-size:.9em;">Populate blank SOTD format</a>
+								<legend> SotD </legend>
+								<textarea name="sotd_text" id="sotd_text" style="width:100%;height:200px;"><?php echo ($sotd_text_file != false) ? $sotd_text_file : ''; ?></textarea>
+							</fieldset>
+							<fieldset>
+								<legend> CX chunk (overrides author default) </legend>
+								<textarea name="correx_text" style="width:100%;height:200px;"><?php echo ($correx_text_file != false) ? $correx_text_file : ''; ?></textarea>
+							</fieldset>
+					</fieldset>
+					<input type="submit" value="CREATE"  style="width:100%;" class="button" />
+				</div>
+				<div class="large-6 columns">
+					<fieldset>
 						<legend> OneTab source </legend>
+							<p style="color:#888;font-style:italic"><strong>To get source from your OneTab page:</strong> right-click and select View Source (also: CTRL+U or CMD+OPTION+U); CTRL+A to select all, CTRL+C to copy, CTRL+V to paste.</p>
 							<label for="input_text">Paste here:</label>
-							<textarea id="input_text" name="input_text" style="width:100%;height:100px;"><?php echo ($input_text!=false) ? $input_text : ''; ?></textarea>
+							<textarea id="input_text" name="input_text" style="width:100%;height:400px;"><?php echo ($input_text!=false) ? $input_text : ''; ?></textarea>
 					</fieldset>
 					<fieldset>
 						<legend> HTML Output </legend>
 							<textarea id="roundup_text" style="width:100%;height:600px;"><?php echo $links_processed; ?></textarea>
-							<input type="button" value="Copy!" class="button" id="roundup_text_button" />
+							<input type="button" value="COPY AS HTML" class="button"  style="width:100%;" id="roundup_text_button" />
 							<script>
 								var copyTextareaBtn = document.querySelector('#roundup_text_button');
 								copyTextareaBtn.addEventListener('click', function(event) {
@@ -309,37 +353,6 @@ if ($blank == true || !empty($_POST)) {
 							<?php } ?>
 					</fieldset>
 				</div>
-				<div class="large-6 columns">
-					<fieldset>
-						<legend> Options </legend>
-							<fieldset>
-								<legend> Template </legend>
-								<input type="radio" name="templates" value="roundup" checked> Mile High Roundup
-							</fieldset>
-							<fieldset>
-								<legend> Author </legend>
-								<?php if (!$byline_text_file) { ?>
-								<input type="radio" name="authors" value="schneider" <?php echo $schcheck; ?>> Daniel J. Schneider<br />
-								<input type="radio" name="authors" value="lubbers" <?php echo $lubcheck; ?>> Eric Lubbers
-								<?php } else { ?>
-								<textarea name="intro_text" style="width:100%;height:250px;"><?php echo $byline_text_file; ?></textarea>
-								<?php } ?>
-							</fieldset>
-							<fieldset>
-								<legend> Intro </legend>
-								<textarea name="intro_text" style="width:100%;height:250px;"><?php echo ($intro_text_file != false) ? $intro_text_file : ''; ?></textarea>
-							</fieldset>
-							<fieldset>
-								<legend> SotD </legend>
-								<textarea name="sotd_text" style="width:100%;height:250px;"><?php echo ($sotd_text_file != false) ? $sotd_text_file : ''; ?></textarea>
-							</fieldset>
-							<fieldset>
-								<legend> CX chunk (overrides author default) </legend>
-								<textarea name="correx_text" style="width:100%;height:250px;"><?php echo ($correx_text_file != false) ? $correx_text_file : ''; ?></textarea>
-							</fieldset>
-					</fieldset>
-					<input type="submit" value="Update" class="button" />
-				</div>
 			</form>
 		</div>
 
@@ -354,6 +367,14 @@ if ($blank == true || !empty($_POST)) {
 	<script src="http://extras.denverpost.com/foundation/js/foundation.min.js"></script>
 	<script>
 		$(document).foundation();
+		function populateSOTD() {
+			var SOTDstring = '<span style="display:block;height:1em;width:100%;"></span>\n' +
+'<h2>Song of the Day</h2>\n' +
+'<p><strong>Song:</strong> &ldquo;<a href="YOUTUBE_LINK_HERE" title="YOUTUBE_LINK_HERE">SONG_TITLE_HERE</a>&rdquo;</p>\n' +
+'<p><strong>Artist:</strong> ARTIST_NAME_HERE</p>\n' +
+'<p><strong>Sounds like:</strong> YOUR_DESCRIPTION_HERE</p>';
+			$('#sotd_text').val(SOTDstring);
+		}
 	</script>
 </body>
 </html>
