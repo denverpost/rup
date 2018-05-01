@@ -43,7 +43,7 @@ $files_list = array_reverse($files_list);
 	<style type="text/css">
 	th { font-size:1.2em; }
 	</style>
-	<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="//extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
@@ -56,7 +56,7 @@ $files_list = array_reverse($files_list);
 			<nav class="top-bar" data-topbar="" role="navigation">
 				<ul class="title-area">
 					<li class="name">
-						<a href="http://denverpost.com"><img src="http://extras.denverpost.com/candidate-qa/denver-2015/images/dp-logo-white.png" alt="The Denver Post logo" class="nav-logo"></a>
+						<a href="https://denverpost.com"><img src="//extras.denverpost.com/candidate-qa/denver-2015/images/dp-logo-white.png" alt="The Denver Post logo" class="nav-logo"></a>
 					</li>
 				</ul>
 				<section class="top-bar-section">
@@ -138,7 +138,7 @@ $files_list = array_reverse($files_list);
 		    </div>
 		</footer>
 
-	<script src="http://extras.denverpost.com/foundation/js/foundation.min.js"></script>
+	<script src="//extras.denverpost.com/foundation/js/foundation.min.js"></script>
 	<script>
 		$(document).foundation();
 	</script>

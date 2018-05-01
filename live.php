@@ -33,7 +33,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 	#editor_content textarea { white-space:nowrap!important; }
 	</style>
 
-	<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="//extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
@@ -46,7 +46,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 			<nav class="top-bar" data-topbar="" role="navigation">
 				<ul class="title-area">
 					<li class="name">
-						<a href="http://denverpost.com"><img src="http://extras.denverpost.com/candidate-qa/denver-2015/images/dp-logo-white.png" alt="The Denver Post logo" class="nav-logo"></a>
+						<a href="https://denverpost.com"><img src="//extras.denverpost.com/candidate-qa/denver-2015/images/dp-logo-white.png" alt="The Denver Post logo" class="nav-logo"></a>
 					</li>
 				</ul>
 				<section class="top-bar-section">
@@ -90,7 +90,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 						</a>
 					</div>
 					<div class="large-4 columns" style="padding-top:1em;">
-						<input type="submit" value="UPDATE SAVED FILE" class="button" style="width:100%;text-align:center;" />
+						<input type="submit" value="UPDATE SAVED FILE" class="button" id="update_file_button"style="width:100%;text-align:center;" disabled />
 					</div>
 					<input type="hidden" id="editor_html" name="editor_html" value="<?php echo htmlentities($editor_html); ?>" />
 				</div>
@@ -120,7 +120,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
 
-	<script src="http://extras.denverpost.com/foundation/js/foundation.min.js"></script>
+	<script src="//extras.denverpost.com/foundation/js/foundation.min.js"></script>
 	<script>
 		$(document).foundation();
 	</script>
@@ -219,11 +219,21 @@ $editor_html = file_get_contents('./cache/'.$file);
 		});
 	</script>
 	<script>
+		var unsaved = false;
         $(document).ready(function(){
         	editor.getSession().on('change', function(e) {
 			    $("#editor_view").contents().find('html').html(editor.getValue());
 			    $("#editor_html").val(htmlEntities(editor.getValue()));
+			    if (unsaved == false) {
+				    $('#update_file_button').removeAttr('disabled');
+				    unsaved = true;
+				}
 			});
+			window.onbeforeunload = function(){
+				if (unsaved) {
+					return 'Are you sure you want to leave?';
+				}
+			};
         });
 	</script>
 </body>
