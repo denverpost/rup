@@ -9,14 +9,16 @@
 
 	        // Output headers.
 	        header("Cache-Control: public");
-		    header("Content-Description: File Transfer");
 		    header("Content-Transfer-Encoding: binary");
-	        header("Content-Type: text/html");
+	        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
+	        header('Accept-Ranges: bytes');
 	        header("Content-Length: ".$fileSize);
+	        header('Content-Encoding: none');
+	        header("Content-Type: text/html");
 	        header("Content-Disposition: attachment; filename=".$fileName);
 
 	        // Output file.
-	        readfile ($filePath);                   
+	        readfile($filePath);                   
 	        exit();
 	    }
 	    else {
