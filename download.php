@@ -26,4 +26,6 @@
 	    }
 	}
 ?>
-
+<script>
+	window.close();
+</script>

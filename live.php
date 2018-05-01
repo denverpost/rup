@@ -85,9 +85,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 						</a>
 					</div>
 					<div class="large-4 columns" style="padding-top:1em;">
-						<a href="<?php echo './download.php?filename='.str_replace('.html','',$file); ?>" target="_blank" download>
-							<button class="button" style="width:100%;text-align:center;">DOWNLOAD FILE</button>
-						</a>
+						<button class="button" style="width:100%;text-align:center;" id="download_file_button">DOWNLOAD FILE</button>
 					</div>
 					<div class="large-4 columns" style="padding-top:1em;">
 						<input type="submit" value="UPDATE SAVED FILE" class="button" id="update_file_button"style="width:100%;text-align:center;" disabled />
@@ -239,7 +237,11 @@ $editor_html = file_get_contents('./cache/'.$file);
 				    unsaved = true;
 				}
 			});
-			document.getElemebtById('update_file_button').onclick = function() {
+			document.getElementById('download_file_button').onclick = function() {
+				filename = './download.php?filename=<?php echo str_replace('.html','',$file); ?>';
+				window.open(filename, '_blank');
+			}
+			document.getElementById('update_file_button').onclick = function() {
 				unsaved=false;
 			}
 			window.onbeforeunload = function(){
