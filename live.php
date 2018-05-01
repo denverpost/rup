@@ -85,9 +85,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 						</a>
 					</div>
 					<div class="large-4 columns" style="padding-top:1em;">
-						<a href="<?php echo 'download.php?filename='.str_replace('.html','',$file); ?>" target="_blank">
-							<button class="button" style="width:100%;text-align:center;">DOWNLOAD FILE</button>
-						</a>
+						<button class="button" style="width:100%;text-align:center;" onClick="window.location.href='<?php echo dirname(__FILE__) . '/download.php?filename='.str_replace('.html','',$file); ?>'">DOWNLOAD FILE</button>
 					</div>
 					<div class="large-4 columns" style="padding-top:1em;">
 						<input type="submit" value="UPDATE SAVED FILE" class="button" id="update_file_button"style="width:100%;text-align:center;" disabled />
@@ -112,6 +110,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 			<li><strong>Ctrl-Alt-B / Command-Ctrl-B</strong>: Insert a &lt;blockquote&gt; template; highlighted text will be wrapped, otherwise a blank template will be inserted with your cursor placed appropriately.</li>
 			<li><strong>Ctrl-Alt-G / Command-Ctrl-G</strong>: Insert a suitable tag for an animated GIF!</li>
 			<li><strong>Ctrl-Alt-I / Command-Ctrl-I</strong>: Insert an image template snippet.</li>
+			<li><strong>Ctrl-Alt-S / Command-Ctrl-S</strong>: Insert a spacer div (increases vertical gap by the height of a line of text).</li>
 			<li><strong>Ctrl-Alt-L / Command-Ctrl-L</strong>: Wrap the selected text with a link (&lt;a&gt;) tag; you will be prompted to past ein the URL you want.</li>
 			<li><strong>Ctrl-Alt-P / Command-Ctrl-P</strong>: Insert a source tag (like in What We're Reading); highlighted text will be wrapped, otherwise you will be promted to type or paste a source name.</li>
 			<li><strong>Ctrl-Alt-K / Command-Ctrl-K</strong>: Insert a By The Numbers-type number template; highlighted text will be wrapped, otherwise a blank tag will be inserted with your cursor ready to type the number.</li>
@@ -167,6 +166,15 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    readOnly: false
 		});
 		editor.commands.addCommand({
+		    name: 'insertSpacer',
+		    bindKey: {win: 'Ctrl-Alt-S',  mac: 'Command-Ctrl-S'},
+		    exec: function(editor) {
+		    	var snippetText = '<span style="display:block;height:1em;width:100%;"></span>\n';
+		        editor.insertSnippet(snippetText);
+		    },
+		    readOnly: false
+		});
+		editor.commands.addCommand({
 		    name: 'insertImage',
 		    bindKey: {win: 'Ctrl-Alt-I',  mac: 'Command-Ctrl-I'},
 		    exec: function(editor) {
@@ -193,10 +201,10 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
 		    	if (origText == '') {
 			    	var result = prompt('Source name:\n','');
-		            var link = ' <span style="color:#13618D;font-weight:bold;text-decoration:none;">&mdash; ' + result + '</span>';
+		            var link = ' <span style="font-style:italic;font-weight:bold;color:maroon;font-family:serif">&mdash; ' + result + '</span>';
 			        editor.session.insert(editor.getCursorPosition(), link)
 			    } else {
-		            var snippetText = ' <span style="color:#13618D;font-weight:bold;text-decoration:none;">&mdash; ' + origText + '</span>';
+		            var snippetText = ' <span style="font-style:italic;font-weight:bold;color:maroon;font-family:serif">&mdash; ' + origText + '</span>';
 			        editor.session.replace(editor.selection.getRange(), snippetText);
 			    }
 		    },
@@ -229,6 +237,9 @@ $editor_html = file_get_contents('./cache/'.$file);
 				    unsaved = true;
 				}
 			});
+			document.getElemebtById('update_file_button').onclick = function() {
+				unsaved=false;
+			}
 			window.onbeforeunload = function(){
 				if (unsaved) {
 					return 'Are you sure you want to leave?';
