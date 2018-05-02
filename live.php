@@ -107,6 +107,8 @@ $editor_html = file_get_contents('./cache/'.$file);
 		<h2 id="modalTitle">AWESOME HOTKEYS!</h2>
 		<p class="lead">These hotkeys will help you bang out a Roundup lickety-split!</p>
 		<ul>
+			<li><strong>Ctrl-B / Command-B</strong>: Make highlighted text <strong>bold</strong>.</li>
+			<li><strong>Ctrl-I / Command-I</strong>: Make highlighted text <em>italic</em>.</li>
 			<li><strong>Ctrl-Alt-B / Command-Ctrl-B</strong>: Insert a &lt;blockquote&gt; template; highlighted text will be wrapped, otherwise a blank template will be inserted with your cursor placed appropriately.</li>
 			<li><strong>Ctrl-Alt-G / Command-Ctrl-G</strong>: Insert a suitable tag for an animated GIF!</li>
 			<li><strong>Ctrl-Alt-I / Command-Ctrl-I</strong>: Insert an image template snippet.</li>
@@ -132,6 +134,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 	    editor.setTheme("ace/theme/monokai_bright");
 	    editor.getSession().setMode("ace/mode/html");
 	    ace.config.loadModule('ace/ext/language_tools');
+	    editor.$blockScrolling = Infinity
     	
     	//editor.insertSnippet(snippetText);
 
@@ -142,15 +145,35 @@ $editor_html = file_get_contents('./cache/'.$file);
 		        delete editor.keyBinding.$defaultHandler.commandKeyBinding[key]
 		}
 	    editor.commands.addCommand({
+		    name: 'wrapBold',
+		    bindKey: {win: 'Ctrl-B',  mac: 'Command-B'},
+		    exec: function(editor) {
+	            var origText = editor.session.getTextRange(editor.getSelectionRange());
+	            var snippetText = '<strong>' + origText + '</strong>';
+		        editor.session.replace(editor.selection.getRange(), snippetText);
+		    },
+		    readOnly: false
+		});
+	    editor.commands.addCommand({
+		    name: 'wrapEm',
+		    bindKey: {win: 'Ctrl-I',  mac: 'Command-I'},
+		    exec: function(editor) {
+	            var origText = editor.session.getTextRange(editor.getSelectionRange());
+	            var snippetText = '<em>' + origText + '</em>';
+		        editor.session.replace(editor.selection.getRange(), snippetText);
+		    },
+		    readOnly: false
+		});
+	    editor.commands.addCommand({
 		    name: 'insertBlockQuote',
 		    bindKey: {win: 'Ctrl-Alt-B',  mac: 'Command-Ctrl-B'},
 		    exec: function(editor) {
 		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
 		    	if (origText == '') {
-			    	var snippetText = '\n<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n</blockquote>\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>\n';
+			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n</blockquote>\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>';
 			        editor.insertSnippet(snippetText);
 		        } else {
-		            var link = '\n<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n' + origText + '\n</blockquote>\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>\n';
+		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n' + origText + '\n</blockquote>\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>';
 			        editor.session.replace(editor.selection.getRange(), link);
 			    }
 		    },
@@ -160,7 +183,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    name: 'insertGif',
 		    bindKey: {win: 'Ctrl-Alt-G',  mac: 'Command-Ctrl-G'},
 		    exec: function(editor) {
-		    	var snippetText = '\n<center><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:350px;font-size: 15px; line-height: 100%; color: #555555;display:block;"></center>\n';
+		    	var snippetText = '<center><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:350px;font-size: 15px; line-height: 100%; color: #555555;display:block;"></center>';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
@@ -169,7 +192,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    name: 'insertSpacer',
 		    bindKey: {win: 'Ctrl-Alt-S',  mac: 'Command-Ctrl-S'},
 		    exec: function(editor) {
-		    	var snippetText = '<span style="display:block;height:1em;width:100%;"></span>\n';
+		    	var snippetText = '<span style="display:block;height:1em;width:100%;"></span>';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
@@ -178,7 +201,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    name: 'insertImage',
 		    bindKey: {win: 'Ctrl-Alt-I',  mac: 'Command-Ctrl-I'},
 		    exec: function(editor) {
-		    	var snippetText = '\n<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="[[STORY_LINK]]" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n<p style="text-align:right;font-size:14px;font-style: italic;">[[CREDIT]]</p>\n<p style="font-style:italic;font-size:14px;">[[CUTLINE]]</p>\n';
+		    	var snippetText = '<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="[[STORY_LINK]]" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n<p style="text-align:right;font-size:14px;font-style: italic;">[[CREDIT]]</p>\n<p style="font-style:italic;font-size:14px;">[[CUTLINE]]</p>';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
@@ -216,7 +239,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    exec: function(editor) {
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
 	            if (origText == '') {
-	            	var snippetText = '<p style="text-align:center;font-size:42px;font-weight:bold;margin:0;">$0</p>\n';
+	            	var snippetText = '<p style="text-align:center;font-size:42px;font-weight:bold;margin:0;">$0</p>';
 			        editor.insertSnippet(snippetText);
 	            } else {
 		            var link = '<p style="text-align:center;font-size:42px;font-weight:bold;margin:0;">' + origText + '</p>';

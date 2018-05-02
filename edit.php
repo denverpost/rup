@@ -145,7 +145,8 @@ if ($blank == true || !empty($_POST)) {
 		$inputfile = trim(str_replace('<div style="padding-top: 8px;"></div>', '', $inputfile));
 		$inputfile = trim(str_replace('<div style="padding-top: 8px; "></div>', '', $inputfile));
 		$inputfile = trim(str_replace('<div style="padding-top:0px;"> </div>', '', $inputfile));
-		$inputfile = trim(preg_replace('/<div style="padding-top:0px;">( *)<\/div>/', '', $inputfile));
+		$inputfile = trim(preg_replace('/<div style="padding-bottom:(\s*)8px;">(\s*)<\/div>/', '', $inputfile));
+		$inputfile = trim(preg_replace('/<div style="padding-top:0px;">(\s*)<\/div>/', '', $inputfile));
 		$inputfile = trim(str_replace('<div style="padding-top:0px;"></div>', '', $inputfile));
 		$inputfile = trim(str_replace('<div style="padding-top:0px;"></div>', '', $inputfile));
 
@@ -164,7 +165,7 @@ if ($blank == true || !empty($_POST)) {
 		$inputfile = urldecode($inputfile);
 
 		// Convert title chunks to H2 tags with spacers before them
-		$inputfile = preg_replace('/<div style="padding-top:10px; padding-bottom:0px; padding-left:24px; font-family: \'Open Sans\', \'Helvetica Neue\', Arial, sans-serif; color: #444; font-size:26px; font-weight:300">(.*?)<\/div>/', "<span style=\"display:block;height:1em;width:100%;\"></span>\n<h2>$1</h2>", $inputfile);
+		$inputfile = preg_replace('/<div style="padding-top:10px; padding-bottom:0px; padding-left:24px; font-family: \'Open Sans\', \'Helvetica Neue\', Arial, sans-serif; color: #444; font-size:26px; font-weight:300">(.*?)<\/div>/', "\n\n" . "<span style=\"display:block;height:1em;width:100%;\"></span>"."\n\n"."<h2>$1</h2>", $inputfile);
 
 		// Strip styling from link tags
 		$inputfile = str_replace('<a style="vertical-align: middle; padding-left: 10px; padding-right: 12px; text-decoration: none;" href', '<a style="border-bottom:1px dashed;padding:2px 0;text-decoration:none;color:#13618D;font-weight:bold;" href', $inputfile);
@@ -172,15 +173,23 @@ if ($blank == true || !empty($_POST)) {
 		// Change ugly divs to simple paragraphs
 		$inputfile = str_replace(' <div style="padding-left: 24px; padding-top: 8px; position: relative; font-size: 13px;">  <a', '<p>+ <a', $inputfile);
 
+		$inputfile = preg_replace('/(\n)+/m', "\n", $inputfile);
+
 		$html = new simple_html_dom();
 
 		$html->load($inputfile,true,false);
 
 		foreach($html->find('div') as $div) {
-			if(trim($div->innertext) == '') {
-				$div->outertext = '';
-			}
+			$div->outertext = '';
 		}
+
+		$html->save();
+
+		foreach($html->find('div') as $div) {
+			$div->outertext = NULL;
+		}
+
+		$html->save();
 
 		foreach($html->find('a[href]') as $link) {
 			$link_count++;
@@ -221,12 +230,24 @@ if ($blank == true || !empty($_POST)) {
 		$links_format = new Format;
 		$links_processed = $links_format->HTML($links_processed);
 		$links_processed = preg_replace('/(.*?)<\/div>(.*?)<\/body><\/html>/i', '', $links_processed);
-		$links_processed = preg_replace('/<span style="color:#13618D;font-weight:bold;text-decoration:none;">(.*?)<\/span><\/a>/i', '</a>. <span style="color:#13618D;font-weight:bold;text-decoration:none;">$1</span>', $links_processed);
+		$links_processed = trim(str_replace('<div style="padding-top:8px;"></div>', '', $links_processed));
+		$links_processed = trim(str_replace('<div style="padding-top:8px; "></div>', '', $links_processed));
+		$links_processed = trim(str_replace('<div style="padding-top: 8px;"></div>', '', $links_processed));
+		$links_processed = trim(str_replace('<div style="padding-top: 8px; "></div>', '', $links_processed));
+		$links_processed = trim(str_replace('<div style="padding-top:0px;"> </div>', '', $links_processed));
+		$links_processed = trim(preg_replace('/<div style="padding-top:0px;">(\s*)<\/div>/', '', $links_processed));
+		$links_processed = trim(str_replace('<div style="padding-top:0px;"></div>', '', $links_processed));
+		$links_processed = preg_replace('/ <span style="font-style:italic;font-weight:bold;color:maroon;font-family:serif">(.*?)<\/span><\/a>/i', '</a> <span style="font-style:italic;font-weight:bold;color:maroon;font-family:serif">$1</span>', $links_processed);
+		$links_processed = preg_replace('/<span style="display:block;height:1em;width:100%;"><\/span>( *)<h2>(.*?)<\/h2>/', "\n\n" . "<span style=\"display:block;height:1em;width:100%;\"></span>"."\n"."<h2>$1</h2>", $links_processed);
+		$links_processed = preg_replace('/<\/p>(\s*)<span/', '</p>'."\n\n".'<span', $links_processed);
+		$links_processed = str_replace('<div style="padding-bottom: 8px; "></div> <span', '<span', $links_processed);
+		$links_processed = preg_replace('/(^\s*)<span/', "\n\n".'<span', $links_processed);
+		//$links_processed = preg_replace('/(\n)+/m', "\n", $links_processed);
 
 	}
 	if ($template) {
 		$template_raw = preg_replace('/<!--{{BYLINE}}-->(.*?)<!--{{\/BYLINE}}-->/', '<!--{{BYLINE}}-->'.$byline_text.'<!--{{/BYLINE}}-->', $template_raw);
-		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->'.$links_processed.'<!--{{/CONTENT}}-->', $template_raw);
+		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->'."\n\n".$links_processed."\n\n".'<!--{{/CONTENT}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{INTRO}}-->(.*?)<!--{{\/INTRO}}-->/', '<!--{{INTRO}}-->'.$intro_text.'<!--{{/INTRO}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{SOTD}}-->(.*?)<!--{{\/SOTD}}-->/', '<!--{{SOTD}}-->'.$sotd_text.'<!--{{/SOTD}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{CORREX}}-->(.*?)<!--{{\/CORREX}}-->/', '<!--{{CORREX}}-->'.$correx_text.'<!--{{/CORREX}}-->', $template_raw);
@@ -368,9 +389,7 @@ if ($blank == true || !empty($_POST)) {
 	<script>
 		$(document).foundation();
 		function populateSOTD() {
-			var SOTDstring = '<span style="display:block;height:1em;width:100%;"></span>\n' +
-'<h2>Song of the Day</h2>\n' +
-'<p><strong>Song:</strong> &ldquo;<a href="YOUTUBE_LINK_HERE" title="YOUTUBE_LINK_HERE">SONG_TITLE_HERE</a>&rdquo;</p>\n' +
+			var SOTDstring = '<p><strong>Song:</strong> &ldquo;<a href="YOUTUBE_LINK_HERE" title="YOUTUBE_LINK_HERE">SONG_TITLE_HERE</a>&rdquo;</p>\n' +
 '<p><strong>Artist:</strong> ARTIST_NAME_HERE</p>\n' +
 '<p><strong>Sounds like:</strong> YOUR_DESCRIPTION_HERE</p>';
 			$('#sotd_text').val(SOTDstring);
