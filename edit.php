@@ -221,7 +221,7 @@ if ($blank == true || !empty($_POST)) {
 			$text = str_replace($quotesearch, $quotereplace, $text);
 			
 			//echo "\n".'Corrected: '.strtok($src,'?')."\n";
-			$link->href = ($link_override == false) ? strtok($src,'?') : $link_override;
+			$link->href = ($link_override !== false) ? $link_override : ( strpos($src, 'utm_' !== false) ? strtok($src,'?') : $src );
 			$link->title = $link->href;
 			$link->innertext = $text.$source_text;
 		}
