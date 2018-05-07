@@ -78,6 +78,14 @@ $lubcheck = $goncheck = $cracheck= '';
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 $links_processed = $input_text = $blank = $byline_text_file = $content_text_file = $intro_text_file = $sotd_text_file = $playlist_text_file = $correx_text_file = false;
 
+function add_link_styles($inputstring) {
+	if ( ! preg_match('/\<a(.+?)style="(.+?)"(.+?)\>/',$inputstring) ) {
+		return preg_replace('/\<a href="(.+?)"\>/', '<a href="$1" style="border-bottom:1px dashed;padding:2px 0;text-decoration:none;color:#13618D;font-weight:bold;">', $inputstring);
+	} else {
+		return $inputstring;
+	}
+}
+
 if (empty($_POST) && $file != false && file_exists('./cache/'.$file)) {
 	$length = strlen(file_get_contents('./cache/'.$file));
 	if ($length>1) {
@@ -87,11 +95,11 @@ if (empty($_POST) && $file != false && file_exists('./cache/'.$file)) {
 		preg_match('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/s', $links_processed, $content_matches);
 		$content_text_file = (isset($content_matches[1])) ? $content_matches[1] : false;
 		preg_match('/<!--{{INTRO}}-->(.*?)<!--{{\/INTRO}}-->/s', $links_processed, $intro_matches);
-		$intro_text_file = (isset($intro_matches[1])) ? $intro_matches[1] : false;
+		$intro_text_file = (isset($intro_matches[1])) ? add_link_styles($intro_matches[1]) : false;
 		preg_match('/<!--{{SOTD}}-->(.*?)<!--{{\/SOTD}}-->/s', $links_processed, $sotd_matches);
-		$sotd_text_file = (isset($sotd_matches[1])) ? $sotd_matches[1] : false;
+		$sotd_text_file = (isset($sotd_matches[1])) ? add_link_styles($sotd_matches[1]) : false;
 		preg_match('/<!--{{CORREX}}-->(.*?)<!--{{\/CORREX}}-->/s', $links_processed, $correx_matches);
-		$correx_text_file = (isset($correx_matches[1])) ? $correx_matches[1] : false;
+		$correx_text_file = (isset($correx_matches[1])) ? add_link_styles($correx_matches[1]) : false;
 	} else {
 		$blank = true;
 	}
