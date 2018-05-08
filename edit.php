@@ -276,7 +276,7 @@ if ($blank == true || !empty($_POST)) {
 	<style type="text/css">
 
 	</style>
-	<link rel="icon" href="//extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="//plus.denverpost.com/favicon.ico" type="image/x-icon" />
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
