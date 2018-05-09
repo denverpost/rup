@@ -256,9 +256,9 @@ if ($blank == true || !empty($_POST)) {
 	if ($template) {
 		$template_raw = preg_replace('/<!--{{BYLINE}}-->(.*?)<!--{{\/BYLINE}}-->/', '<!--{{BYLINE}}-->'.$byline_text.'<!--{{/BYLINE}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->'."\n\n".$links_processed."\n\n".'<!--{{/CONTENT}}-->', $template_raw);
-		$template_raw = preg_replace('/<!--{{INTRO}}-->(.*?)<!--{{\/INTRO}}-->/', '<!--{{INTRO}}-->'.$intro_text.'<!--{{/INTRO}}-->', $template_raw);
-		$template_raw = preg_replace('/<!--{{SOTD}}-->(.*?)<!--{{\/SOTD}}-->/', '<!--{{SOTD}}-->'.$sotd_text.'<!--{{/SOTD}}-->', $template_raw);
-		$template_raw = preg_replace('/<!--{{CORREX}}-->(.*?)<!--{{\/CORREX}}-->/', '<!--{{CORREX}}-->'.$correx_text.'<!--{{/CORREX}}-->', $template_raw);
+		$template_raw = preg_replace('/<!--{{INTRO}}-->(.*?)<!--{{\/INTRO}}-->/', '<!--{{INTRO}}-->'.add_link_styles($intro_text).'<!--{{/INTRO}}-->', $template_raw);
+		$template_raw = preg_replace('/<!--{{SOTD}}-->(.*?)<!--{{\/SOTD}}-->/', '<!--{{SOTD}}-->'.add_link_styles($sotd_text).'<!--{{/SOTD}}-->', $template_raw);
+		$template_raw = preg_replace('/<!--{{CORREX}}-->(.*?)<!--{{\/CORREX}}-->/', '<!--{{CORREX}}-->'.add_link_styles($correx_text).'<!--{{/CORREX}}-->', $template_raw);
 		$links_processed = $template_raw;
 	}
 	if ($file != false) { file_put_contents('./cache/'.$file,$links_processed); }
