@@ -201,7 +201,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    name: 'insertImage',
 		    bindKey: {win: 'Ctrl-Alt-I',  mac: 'Command-Ctrl-I'},
 		    exec: function(editor) {
-		    	var snippetText = '<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="STORY_LINK_GOES_HERE" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n<p style="text-align:right;font-size:13px;font-style:italic;margin-top:.25em;margin-bottom:.25em;color:#555555;">CREDIT_GOES_HERE</p>\n<p style="font-style:italic;font-size:14px;margin-top:.25em;color:#444444;">CUTLINE_GOES_HERE</p>';
+		    	var snippetText = '<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="STORY_LINK_GOES_HERE" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n<p style="font-style:italic;font-size:14px;margin-top:-.5em;color:#444444;">CUTLINE_GOES_HERE</p>';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
