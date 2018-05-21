@@ -112,6 +112,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 			<li><strong>Ctrl-Alt-B / Command-Ctrl-B</strong>: Insert a &lt;blockquote&gt; template; highlighted text will be wrapped, otherwise a blank template will be inserted with your cursor placed appropriately.</li>
 			<li><strong>Ctrl-Alt-G / Command-Ctrl-G</strong>: Insert a suitable tag for an animated GIF!</li>
 			<li><strong>Ctrl-Alt-I / Command-Ctrl-I</strong>: Insert an image template snippet.</li>
+			<li><strong>Ctrl-Alt-H / Command-Ctrl-H</strong>: Insert a subheading; highlighted text will be wrapped, otherwise a blank tag will be inserted with your cursor ready to type the content.</li>
 			<li><strong>Ctrl-Alt-S / Command-Ctrl-S</strong>: Insert a spacer div (increases vertical gap by the height of a line of text).</li>
 			<li><strong>Ctrl-Alt-L / Command-Ctrl-L</strong>: Wrap the selected text with a link (&lt;a&gt;) tag; you will be prompted to past ein the URL you want.</li>
 			<li><strong>Ctrl-Alt-P / Command-Ctrl-P</strong>: Insert a source tag (like in What We're Reading); highlighted text will be wrapped, otherwise you will be promted to type or paste a source name.</li>
@@ -243,6 +244,21 @@ $editor_html = file_get_contents('./cache/'.$file);
 			        editor.insertSnippet(snippetText);
 	            } else {
 		            var link = '<p style="text-align:center;font-size:42px;font-weight:bold;margin:0;">' + origText + '</p>';
+			        editor.session.replace(editor.selection.getRange(), link);
+			    }
+		    },
+		    readOnly: false
+		});
+		editor.commands.addCommand({
+		    name: 'wrapSubhed',
+		    bindKey: {win: 'Ctrl-Alt-H',  mac: 'Command-Ctrl-H'},
+		    exec: function(editor) {
+	            var origText = editor.session.getTextRange(editor.getSelectionRange());
+	            if (origText == '') {
+	            	var snippetText = '<h3 style="font-size:1.1em;padding-top:.5em;color:maroon;text-transform:uppercase;">$0</h3>';
+			        editor.insertSnippet(snippetText);
+	            } else {
+		            var link = '<h3 style="font-size:1.1em;padding-top:.5em;color:maroon;text-transform:uppercase;">' + origText + '</h3>';
 			        editor.session.replace(editor.selection.getRange(), link);
 			    }
 		    },
