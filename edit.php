@@ -7,11 +7,6 @@ require_once('./simple_html_dom.php');
 require_once('./format.php');
 
 $bylines = array(
-	'lubbers' => array(
-		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Eric Lubbers
-					<br /><a href="mailto:;elubbers@denverpost.com?subject=Roundup%20Feedback" title="Email Eric Lubbers @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">elubbers@denverpost.com</a> / <a href="https://twitter.com/brofax" title="@brofax on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@brofax</a></p>',
-		'correx' => '<h2>Get in Touch</h2>
-					<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:elubbers@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at elubbers@denverpost.com</a> or <a href="https://twitter.com/brofax" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
 	'schneider' => array(
 		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Daniel J. Schneider
                     <br /><a href="mailto:dschneider@denverpost.com?subject=Roundup%20Feedback" title="Email Daniel J. Schneider @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">dschneider@denverpost.com</a> / <a href="https://twitter.com/schneidan" title="@schneidan on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@schneidan</a></p>',
@@ -74,7 +69,7 @@ function source_span($input) {
 
 $link_count = 0;
 $schcheck = 'checked';
-$lubcheck = $goncheck = $cracheck= '';
+$goncheck = $cracheck= '';
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 $links_processed = $input_text = $blank = $byline_text_file = $content_text_file = $intro_text_file = $sotd_text_file = $playlist_text_file = $correx_text_file = false;
 
@@ -109,10 +104,6 @@ if ($blank == true || !empty($_POST)) {
 	$template = isset($_POST['templates']) ? 'template-'.$_POST['templates'].'.html' : false;
 	$author = isset($_POST['authors']) ? $_POST['authors'] : false;
 	$byline_text = ($author != false) ? $bylines[$author]['byline'] : '';
-	if ($author == 'lubbers') {
-		$schcheck = '';
-		$lubcheck = 'checked';
-	}
 	if ($author == 'gonzalez') {
 		$schcheck = '';
 		$goncheck = 'checked';

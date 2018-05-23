@@ -184,7 +184,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    name: 'insertGif',
 		    bindKey: {win: 'Ctrl-Alt-G',  mac: 'Command-Ctrl-G'},
 		    exec: function(editor) {
-		    	var snippetText = '<center><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:350px;font-size: 15px; line-height: 100%; color: #555555;display:block;"></center>';
+		    	var snippetText = '<center><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:70%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></center>';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
