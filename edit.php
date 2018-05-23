@@ -318,7 +318,6 @@ if ($blank == true || !empty($_POST)) {
 								<legend> Author </legend>
 								<?php if (!$byline_text_file) { ?>
 								<input type="radio" name="authors" value="schneider" <?php echo $schcheck; ?>> Daniel J. Schneider<br />
-								<input type="radio" name="authors" value="lubbers" <?php echo $lubcheck; ?>> Eric Lubbers<br />
 								<input type="radio" name="authors" value="gonzalez" <?php echo $goncheck; ?>> Susan Gonzalez<br />
 								<input type="radio" name="authors" value="crawford" <?php echo $cracheck; ?>> Adrian Crawford
 								<?php } else { ?>
