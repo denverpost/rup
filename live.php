@@ -171,10 +171,10 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    exec: function(editor) {
 		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
 		    	if (origText == '') {
-			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n</blockquote>\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>';
+			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n</blockquote>\n<p style="font-family:serif;color:#800000;text-align:right;font-weight:bold;"></p>';
 			        editor.insertSnippet(snippetText);
 		        } else {
-		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n' + origText + '\n</blockquote>\n<p style="font-family:serif;color:maroon;text-align:right;font-weight:bold;"></p>';
+		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n' + origText + '\n</blockquote>\n<p style="font-family:serif;color:#800000;text-align:right;font-weight:bold;"></p>';
 			        editor.session.replace(editor.selection.getRange(), link);
 			    }
 		    },
@@ -225,10 +225,10 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
 		    	if (origText == '') {
 			    	var result = prompt('Source name:\n','');
-		            var link = ' <span style="font-style:italic;font-weight:bold;color:maroon;font-family:serif">&mdash; ' + result + '</span>';
+		            var link = ' <span style="font-style:italic;font-weight:bold;color:#800000;font-family:serif">&mdash; ' + result + '</span>';
 			        editor.session.insert(editor.getCursorPosition(), link)
 			    } else {
-		            var snippetText = ' <span style="font-style:italic;font-weight:bold;color:maroon;font-family:serif">&mdash; ' + origText + '</span>';
+		            var snippetText = ' <span style="font-style:italic;font-weight:bold;color:#800000;font-family:serif">&mdash; ' + origText + '</span>';
 			        editor.session.replace(editor.selection.getRange(), snippetText);
 			    }
 		    },
@@ -255,10 +255,10 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    exec: function(editor) {
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
 	            if (origText == '') {
-	            	var snippetText = '<h3 style="font-size:1.1em;padding-top:.5em;color:maroon;text-transform:uppercase;">$0</h3>';
+	            	var snippetText = '<h3 style="font-size:1.1em;padding-top:.5em;color:#800000;text-transform:uppercase;">$0</h3>';
 			        editor.insertSnippet(snippetText);
 	            } else {
-		            var link = '<h3 style="font-size:1.1em;padding-top:.5em;color:maroon;text-transform:uppercase;">' + origText + '</h3>';
+		            var link = '<h3 style="font-size:1.1em;padding-top:.5em;color:#800000;text-transform:uppercase;">' + origText + '</h3>';
 			        editor.session.replace(editor.selection.getRange(), link);
 			    }
 		    },

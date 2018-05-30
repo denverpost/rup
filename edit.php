@@ -12,16 +12,26 @@ $bylines = array(
                     <br /><a href="mailto:dschneider@denverpost.com?subject=Roundup%20Feedback" title="Email Daniel J. Schneider @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">dschneider@denverpost.com</a> / <a href="https://twitter.com/schneidan" title="@schneidan on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@schneidan</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
                   	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:dschneider@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at dschneider@denverpost.com</a> or <a href="https://twitter.com/schneidan" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
-	'gonzalez' => array(
-		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Susan Gonzalez
-                    <br /><a href="mailto:sgonzalez@denverpost.com?subject=Roundup%20Feedback" title="Email Susan Gonzalez @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">sgonzalez@denverpost.com</a> / <a href="https://twitter.com/TheNewsan" title="@TheNewsan on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@TheNewsan</a></p>',
-		'correx' => '<h2>Get in Touch</h2>
-                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:sgonzalez@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at sgonzalez@denverpost.com</a> or <a href="https://twitter.com/TheNewsan" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
 	'crawford' => array(
 		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Adrian Crawford
                     <br /><a href="mailto:acrawford@denverpost.com?subject=Roundup%20Feedback" title="Email Adrian Crawford @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">acrawford@denverpost.com</a> / <a href="https://twitter.com/Crawf33" title="@Crawf33 on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@Crawf33</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
-                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:acrawford@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at acrawford@denverpost.com</a> or <a href="https://twitter.com/Crawf33" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>')
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:acrawford@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at acrawford@denverpost.com</a> or <a href="https://twitter.com/Crawf33" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
+	'rubino' => array(
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Joe Rubino
+                    <br /><a href="mailto:jrubino@denverpost.com?subject=Roundup%20Feedback" title="Email Joe Rubino @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">jrubino@denverpost.com</a> / <a href="https://twitter.com/RubinoJC" title="@RubinoJC on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@RubinoJC</a></p>',
+		'correx' => '<h2>Get in Touch</h2>
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:jrubino@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at jrubino@denverpost.com</a> or <a href="https://twitter.com/RubinoJC" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
+	'nguyen' => array(
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Joe Nguyen
+                    <br /><a href="mailto:jnguyen@denverpost.com?subject=Roundup%20Feedback" title="Email Joe Nguyen @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">jnguyen@denverpost.com</a> / <a href="https://twitter.com/JoeNguyen" title="@JoeNguyen on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@JoeNguyen</a></p>',
+		'correx' => '<h2>Get in Touch</h2>
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:jnguyen@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at jnguyen@denverpost.com</a> or <a href="https://twitter.com/JoeNguyen" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
+	'hernandez' => array(
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Elizabeth Hernandez
+                    <br /><a href="mailto:ehernandez@denverpost.com?subject=Roundup%20Feedback" title="Email Elizabeth Hernandez @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">ehernandez@denverpost.com</a> / <a href="https://twitter.com/ehernandez" title="@ehernandez on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@ehernandez</a></p>',
+		'correx' => '<h2>Get in Touch</h2>
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:ehernandez@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at ehernandez@denverpost.com</a> or <a href="https://twitter.com/ehernandez" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>')
 	);
 
 function source_span($input) {
@@ -69,7 +79,7 @@ function source_span($input) {
 
 $link_count = 0;
 $schcheck = 'checked';
-$goncheck = $cracheck= '';
+$hercheck = $cracheck = $rubcheck = $ngucheck = '';
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 $links_processed = $input_text = $blank = $byline_text_file = $content_text_file = $intro_text_file = $sotd_text_file = $playlist_text_file = $correx_text_file = false;
 
@@ -104,13 +114,21 @@ if ($blank == true || !empty($_POST)) {
 	$template = isset($_POST['templates']) ? 'template-'.$_POST['templates'].'.html' : false;
 	$author = isset($_POST['authors']) ? $_POST['authors'] : false;
 	$byline_text = ($author != false) ? $bylines[$author]['byline'] : '';
-	if ($author == 'gonzalez') {
+	if ($author == 'hernandez') {
 		$schcheck = '';
-		$goncheck = 'checked';
+		$hercheck = 'checked';
 	}
 	if ($author == 'crawford') {
 		$schcheck = '';
 		$cracheck = 'checked';
+	}
+	if ($author == 'rubino') {
+		$schcheck = '';
+		$rubcheck = 'checked';
+	}
+	if ($author == 'nguyen') {
+		$schcheck = '';
+		$ngucheck = 'checked';
 	}
 	$intro_text = isset($_POST['intro_text']) ? $_POST['intro_text'] : false;
 	$sotd_text = isset($_POST['sotd_text']) ? $_POST['sotd_text'] : false;
@@ -318,8 +336,10 @@ if ($blank == true || !empty($_POST)) {
 								<legend> Author </legend>
 								<?php if (!$byline_text_file) { ?>
 								<input type="radio" name="authors" value="schneider" <?php echo $schcheck; ?>> Daniel J. Schneider<br />
-								<input type="radio" name="authors" value="gonzalez" <?php echo $goncheck; ?>> Susan Gonzalez<br />
-								<input type="radio" name="authors" value="crawford" <?php echo $cracheck; ?>> Adrian Crawford
+								<input type="radio" name="authors" value="crawford" <?php echo $cracheck; ?>> Adrian Crawford<br />
+								<input type="radio" name="authors" value="hernandez" <?php echo $hercheck; ?>> Elizabeth Hernandez<br />
+								<input type="radio" name="authors" value="rubino" <?php echo $rubcheck; ?>> Joe Rubino<br />
+								<input type="radio" name="authors" value="nguyen" <?php echo $ngucheck; ?>> Joe Nguyen
 								<?php } else { ?>
 								<textarea name="intro_text" style="width:100%;height:250px;"><?php echo $byline_text_file; ?></textarea>
 								<?php } ?>
