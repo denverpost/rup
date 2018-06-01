@@ -296,6 +296,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 			$('#editor_content').css('height',window_height);
 			$('#editor_view').css('height',window_height);
 		}
+		adjustHeight();
 		$(window).resize(function(){
 			adjustHeight();
 		})
