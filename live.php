@@ -290,5 +290,15 @@ $editor_html = file_get_contents('./cache/'.$file);
 			};
         });
 	</script>
+	<script>
+		function adjustHeight(){
+			var window_height = (window.innerHeight-175)+'px';
+			$('#editor_content').css('height',window_height);
+			$('#editor_view').css('height',window_height);
+		}
+		$(window).resize(function(){
+			adjustHeight();
+		})
+	</script>
 </body>
 </html>
