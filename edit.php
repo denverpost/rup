@@ -304,7 +304,9 @@ if ($blank == true || !empty($_POST)) {
 				<section class="top-bar-section">
 				<ul class="right">
 					<li class="divider"></li>
-					<li class="top-top"><a href="index.php"><strong>EDIT ANOTHER ROUNDUP</strong></a></li>
+					<li class="top-top"><a href="convert.php"><strong>WORDPRESS NL CONVERTER</strong></a></li>
+					<li class="divider"></li>
+					<li class="top-top"><a href="index.php"><strong>EDIT ANOTHER NEWSLETTER</strong></a></li>
 					<li class="divider"></li>
 				</ul>
 			</section>

@@ -3,11 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$errmsg = false;
+$errmsg = $all = false;
 if (!empty($_POST)) {
 	if (isset($_POST['new_date'])) {
 		$filename = $_POST['new_template'].'-'.$_POST['new_date'].'.html';
-		if (file_exists($filename)) {
+		if (file_exists('./cache/'.$filename)) {
 			$errmsg = 'That one already exists!';
 		} else {
 			touch('./cache/'.$filename);
@@ -15,15 +15,30 @@ if (!empty($_POST)) {
 	} else {
 		$errmsg = 'We need a date!';
 	}
+} else {
+	$list = (isset($_GET['list'])) ? $_GET['list'] : false;
+	$all = ($list == 'all') ? true : false;
 }
 
 $files_list = array();
+$files_types = array();
 if ($handle = opendir('./cache')) {
-    while (false !== ($file = readdir($handle)))
-    {
-        if ($file != "." && $file != ".." && strtolower(substr($file, strrpos($file, '.') + 1)) == 'html')
-        {
-            $files_list[] = $file;
+    while (false !== ($file = readdir($handle))) {
+        if ($file != "." && $file != ".." && strtolower(substr($file, strrpos($file, '.') + 1)) == 'html') {
+        	if ($all) {
+		    	$files_list[] = $file;
+		    } else {
+        		$fileparts = explode('-', $file);
+				$nl_type = $fileparts[0];
+				if (isset($files_types[$nl_type])) {
+					$files_types[$nl_type]++;
+				} else {
+					$files_types[$nl_type] = 1;
+				}
+				if ($files_types[$nl_type] <= 5) {
+		            $files_list[] = $file;
+		        }
+		    } 
         }
     }
     closedir($handle);
@@ -62,6 +77,8 @@ $files_list = array_reverse($files_list);
 				<section class="top-bar-section">
 				<ul class="right">
 					<li class="divider"></li>
+					<li class="top-top"><a href="convert.php"><strong>WORDPRESS NL CONVERTER</strong></a></li>
+					<li class="divider"></li>
 				</ul>
 			</section>
 			</nav>
@@ -73,7 +90,7 @@ $files_list = array_reverse($files_list);
 			<div class="row">
 				<div class="large-12 columns">
 					<h1>Edit or create a newsletter</h1>
-					<p>Select from the list to edit an existing newsletter.</p>
+					<p>Select from the list to edit an existing newsletter, or create a new Roundup right here.</p>
 					<p>Select a template and input the date to create a new one. Then click the created link to edit.</p>
 				</div>
 			</div>
@@ -82,7 +99,7 @@ $files_list = array_reverse($files_list);
 			<form id="newroundup" name="newroundup" method="post">
 				<div class="large-10 large-centered columns">
 					<fieldset>
-						<legend> Create a new newsletter </legend>
+						<legend>&nbsp;Create a new Roundup (for other newsletters, use the <a href="./convert.php">Wordpress Converter</a>)&nbsp;</legend>
 							<div class="row">
 								<div class="large-4 columns">
 									<label for="new_date">Date:</label>
@@ -98,7 +115,7 @@ $files_list = array_reverse($files_list);
 							</div>
 						</fieldset>
 					<fieldset>
-						<legend> <?php echo count($files_list); ?> files </legend>
+						<legend>&nbsp;<?php echo count($files_list); ?> recent newsletters&nbsp;</legend>
 							<?php if (!count($files_list)>0) { ?>
 								<div class="row">
 									<div class="large-12 columns text-center">
@@ -126,6 +143,17 @@ $files_list = array_reverse($files_list);
 								</table>
 							<?php } ?>
 					</fieldset>
+					<?php if ($all) { ?>
+					<fieldset>
+						<legend>&nbsp;Too many files?&nbsp;</legend>
+						<a href="./index.php?list=none" style="width:100%;" class="button">GO BACK TO THE SHOTER LIST OF NEWSLETTERS</a>
+					</fieldset>
+					<?php } else { ?>
+					<fieldset>
+						<legend>&nbsp;Looking for older files?&nbsp;</legend>
+						<a href="./index.php?list=all" style="width:100%;" class="button">GET THE COMPLETE LIST OF CACHED NEWSLETTERS</a>
+					</fieldset>
+				<?php } ?>
 				</div>
 			</form>
 		</div>

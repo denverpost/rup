@@ -10,6 +10,17 @@ if ($file != false && isset($_POST['editor_html'])) {
 }
 
 $editor_html = file_get_contents('./cache/'.$file);
+$fileparts = explode('-', $file);
+$nl_type = $fileparts[0];
+$link_colors = array(
+	'roundup' => '#13618D',
+	'know' => '#13618D',
+	'outdoors' => '#13618D',
+	'rockies' => '#330072',
+	'broncos' => '#FC4C02',
+	'spot' => '#CE4815',
+	'omelette' => '#CE4815',
+	);
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +63,9 @@ $editor_html = file_get_contents('./cache/'.$file);
 				<section class="top-bar-section">
 				<ul class="right">
 					<li class="divider"></li>
-					<li class="top-top"><a href="index.php"><strong>EDIT ANOTHER ROUNDUP</strong></a></li>
+					<li class="top-top"><a href="convert.php"><strong>WORDPRESS NL CONVERTER</strong></a></li>
+					<li class="divider"></li>
+					<li class="top-top"><a href="index.php"><strong>EDIT ANOTHER NEWSLETTER</strong></a></li>
 					<li class="divider"></li>
 				</ul>
 			</section>
@@ -171,10 +184,10 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    exec: function(editor) {
 		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
 		    	if (origText == '') {
-			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;margin-bottom:.2em;">\n$0\n</blockquote>\n<p style="margin-top:0;font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
+			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;padding:0 1em;line-height:1.3em;margin-bottom:.2em;">\n$0\n</blockquote>\n<p style="margin-top:0;font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
 			        editor.insertSnippet(snippetText);
 		        } else {
-		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;margin-bottom:.2em;">\n' + origText + '\n</blockquote>\n<p style="margin-top:0;font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
+		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;padding:0 1em;line-height:1.3em;margin-bottom:.2em;">\n' + origText + '\n</blockquote>\n<p style="margin-top:0;font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
 			        editor.session.replace(editor.selection.getRange(), link);
 			    }
 		    },
@@ -213,7 +226,7 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    exec: function(editor) {
 		    	var result = prompt('Paste link URL:\n','');
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
-	            var link = '<a style="border-bottom:1px dashed;padding:2px 0;text-decoration:none;color:#13618D;font-weight:bold;" href="' + result + '" title="' + result + '">' + origText + '</a>';
+	            var link = '<a style="border-bottom:1px dashed;padding:2px 0;text-decoration:none;color:<?php echo $link_colors[$nl_type]; ?>;font-weight:bold;" href="' + result + '" title="' + result + '">' + origText + '</a>';
 		        editor.session.replace(editor.selection.getRange(), link);
 		    },
 		    readOnly: false
