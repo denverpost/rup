@@ -171,10 +171,10 @@ $editor_html = file_get_contents('./cache/'.$file);
 		    exec: function(editor) {
 		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
 		    	if (origText == '') {
-			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n</blockquote>\n<p style="font-family:serif;color:#800000;text-align:right;font-weight:bold;"></p>';
+			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n$0\n</blockquote>\n<p style="font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
 			        editor.insertSnippet(snippetText);
 		        } else {
-		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n' + origText + '\n</blockquote>\n<p style="font-family:serif;color:#800000;text-align:right;font-weight:bold;"></p>';
+		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;;padding:0 1em;line-height:1.3em;">\n' + origText + '\n</blockquote>\n<p style="font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
 			        editor.session.replace(editor.selection.getRange(), link);
 			    }
 		    },
