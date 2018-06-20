@@ -20,31 +20,38 @@ if (!empty($_POST)) {
 	$all = ($list == 'all') ? true : false;
 }
 
-$files_list = array();
-$files_types = array();
+$files_listed = array();
 if ($handle = opendir('./cache')) {
     while (false !== ($file = readdir($handle))) {
         if ($file != "." && $file != ".." && strtolower(substr($file, strrpos($file, '.') + 1)) == 'html') {
-        	if ($all) {
-		    	$files_list[] = $file;
-		    } else {
-        		$fileparts = explode('-', $file);
-				$nl_type = $fileparts[0];
-				if (isset($files_types[$nl_type])) {
-					$files_types[$nl_type]++;
-				} else {
-					$files_types[$nl_type] = 1;
-				}
-				if ($files_types[$nl_type] <= 5) {
-		            $files_list[] = $file;
-		        }
-		    } 
+        	$files_listed[] = $file;
+
         }
     }
     closedir($handle);
 }
-sort($files_list, SORT_NATURAL);
-$files_list = array_reverse($files_list);
+
+sort($files_listed, SORT_NATURAL);
+$files_listed = array_reverse($files_listed);
+
+$files_list = array();
+$files_types = array();
+foreach ($files_listed as $file) {
+	if ($all) {
+		$files_list[] = $file;
+	} else {
+		$fileparts = explode('-', $file);
+		$nl_type = $fileparts[0];
+		if (isset($files_types[$nl_type])) {
+			$files_types[$nl_type]++;
+		} else {
+			$files_types[$nl_type] = 1;
+		}
+		if ($files_types[$nl_type] <= 5) {
+	        $files_list[] = $file;
+	    }
+	}
+}
 
 ?>
 
