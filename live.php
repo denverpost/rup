@@ -3,6 +3,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once './variables.php';
+
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 
 if ($file != false && isset($_POST['editor_html'])) {
@@ -12,15 +14,6 @@ if ($file != false && isset($_POST['editor_html'])) {
 $editor_html = file_get_contents('./cache/'.$file);
 $fileparts = explode('-', $file);
 $nl_type = $fileparts[0];
-$link_colors = array(
-	'roundup' => '#13618D',
-	'know' => '#13618D',
-	'outdoors' => '#13618D',
-	'rockies' => '#330072',
-	'broncos' => '#FC4C02',
-	'spot' => '#CE4815',
-	'omelette' => '#CE4815',
-	);
 ?>
 
 <!DOCTYPE html>
@@ -130,6 +123,8 @@ $link_colors = array(
 			<li><strong>Ctrl-Alt-L / Command-Ctrl-L</strong>: Wrap the selected text with a link (&lt;a&gt;) tag; you will be prompted to past ein the URL you want.</li>
 			<li><strong>Ctrl-Alt-P / Command-Ctrl-P</strong>: Insert a source tag (like in What We're Reading); highlighted text will be wrapped, otherwise you will be promted to type or paste a source name.</li>
 			<li><strong>Ctrl-Alt-K / Command-Ctrl-K</strong>: Insert a By The Numbers-type number template; highlighted text will be wrapped, otherwise a blank tag will be inserted with your cursor ready to type the number.</li>
+			<li><strong>Ctrl-Alt-U / Command-Ctrl-U</strong>: Insert a House Ad for digital subscriptions, with a random graphic.</li>
+			<li><strong>Ctrl-Alt-O / Command-Ctrl-O</strong>: Insert a sponsored logo. Must go immediately below the header image, and takes a click-through URL and an image URL.</li>
 
 		</ul>
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
@@ -143,6 +138,9 @@ $link_colors = array(
 	<script>
 		function htmlEntities(str) {
 			return String(str).replace(/\u00A0/g, '&nbsp;').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+		}
+		function getRandomInt(max) {
+			return Math.floor(Math.random() * Math.floor(max));
 		}
 	    var editor = ace.edit("editor_content");
 	    editor.setTheme("ace/theme/monokai_bright");
@@ -226,7 +224,7 @@ $link_colors = array(
 		    exec: function(editor) {
 		    	var result = prompt('Paste link URL:\n','');
 	            var origText = editor.session.getTextRange(editor.getSelectionRange());
-	            var link = '<a style="border-bottom:1px dashed;padding:2px 0;text-decoration:none;color:<?php echo $link_colors[$nl_type]; ?>;font-weight:bold;" href="' + result + '" title="' + result + '">' + origText + '</a>';
+	            var link = '<a style="<?php echo $templates[$nl_type]['link_style']; ?>" href="' + result + '" title="' + result + '">' + origText + '</a>';
 		        editor.session.replace(editor.selection.getRange(), link);
 		    },
 		    readOnly: false
@@ -277,6 +275,27 @@ $link_colors = array(
 		    },
 		    readOnly: false
 		});
+		editor.commands.addCommand({
+		    name: 'insertSub',
+		    bindKey: {win: 'Ctrl-Alt-U',  mac: 'Command-Ctrl-U'},
+		    exec: function(editor) {
+		    	var subNum = 1 + getRandomInt(7);
+		    	var snippetText = '<span style="display:block;height:1em;width:100%;"></span>\n<center>\n<p style="text-align: center;margin:0;padding:0;"><a href="http://dpo.st/99cents" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="https://extras.denverpost.com/newsletter/subscribe-' + subNum + '.png" aria-hidden="true" width="90%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:90%;margin:0 auto;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a></p>\n</center>';
+		        editor.insertSnippet(snippetText);
+		    },
+		    readOnly: false
+		});
+		editor.commands.addCommand({
+		    name: 'insertSpon',
+		    bindKey: {win: 'Ctrl-Alt-O',  mac: 'Command-Ctrl-O'},
+		    exec: function(editor) {
+		    	var snippetText = '<center>\n<p class="leader">Presented By</p>\n<center>\n<p style="text-align: center;margin:0;padding:0;">\n<center>\n<a href="CLICK_THROUGH_URL_GOES_HERE" style="text-decoration:none !important;border:none!important;"><img src="SPONSOR_LOGO_IMAGE_URL_GOES_HERE" aria-hidden="true" width="220" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:220px;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a></center>\n</p>\n</center>\n</center>';
+		        editor.insertSnippet(snippetText);
+		    },
+		    readOnly: false
+		});
+
+
 	</script>
 	<script>
 		var unsaved = false;

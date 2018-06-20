@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once './wp-funcs.php';
-require_once './templatevariables.php';
+require_once './variables.php';
 
 $bylines = array(
 	'none' => array('No byline',false,false),
