@@ -40,7 +40,7 @@ function format_images_without_captions($inputstring) {
 
 function format_images_with_captions($inputstring) {
 	if (preg_match('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', $inputstring)) {
-		return preg_replace('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>'."\r\n".'<p style="font-size:0.85em;color:#595959;margin-top:.5em;font-style:italic;">$2</a></p>', $inputstring);
+		return preg_replace('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>'."\r\n".'<p style="font-size:0.85em;color:#595959;margin-top:.5em;font-style:italic;">$2</p>', $inputstring);
 	} else {
 		return $inputstring;
 	}
