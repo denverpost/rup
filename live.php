@@ -118,6 +118,7 @@ $nl_type = $fileparts[0];
 			<li><strong>Ctrl-Alt-B / Command-Ctrl-B</strong>: Insert a &lt;blockquote&gt; template; highlighted text will be wrapped, otherwise a blank template will be inserted with your cursor placed appropriately.</li>
 			<li><strong>Ctrl-Alt-G / Command-Ctrl-G</strong>: Insert a suitable tag for an animated GIF!</li>
 			<li><strong>Ctrl-Alt-I / Command-Ctrl-I</strong>: Insert an image template snippet.</li>
+			<li><strong>Ctrl-Alt-T / Command-Ctrl-T</strong>: Insert a suitable image tag for a Tweet or YouTube video.</li>
 			<li><strong>Ctrl-Alt-H / Command-Ctrl-H</strong>: Insert a subheading; highlighted text will be wrapped, otherwise a blank tag will be inserted with your cursor ready to type the content.</li>
 			<li><strong>Ctrl-Alt-S / Command-Ctrl-S</strong>: Insert a spacer div (increases vertical gap by the height of a line of text).</li>
 			<li><strong>Ctrl-Alt-L / Command-Ctrl-L</strong>: Wrap the selected text with a link (&lt;a&gt;) tag; you will be prompted to past ein the URL you want.</li>
@@ -195,7 +196,7 @@ $nl_type = $fileparts[0];
 		    name: 'insertGif',
 		    bindKey: {win: 'Ctrl-Alt-G',  mac: 'Command-Ctrl-G'},
 		    exec: function(editor) {
-		    	var snippetText = '<center><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:70%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></center>';
+		    	var snippetText = '<center><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:70%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></center>\n';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
@@ -213,7 +214,16 @@ $nl_type = $fileparts[0];
 		    name: 'insertImage',
 		    bindKey: {win: 'Ctrl-Alt-I',  mac: 'Command-Ctrl-I'},
 		    exec: function(editor) {
-		    	var snippetText = '<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="STORY_LINK_GOES_HERE" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n<p style="font-style:italic;font-size:14px;margin-top:.25em;color:#444444;">CUTLINE_GOES_HERE</p>';
+		    	var snippetText = '<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="STORY_LINK_GOES_HERE" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n<p style="font-style:italic;font-size:14px;margin-top:.25em;color:#444444;">CUTLINE_GOES_HERE</p>\n';
+		        editor.insertSnippet(snippetText);
+		    },
+		    readOnly: false
+		});
+		editor.commands.addCommand({
+		    name: 'insertTweet',
+		    bindKey: {win: 'Ctrl-Alt-T',  mac: 'Command-Ctrl-T'},
+		    exec: function(editor) {
+		    	var snippetText = '<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="TWEET_LINK_GOES_HERE" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="$0" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:70%;font-size: 15px; line-height: 100%; color: #555555;display:block;margin:0 auto;"></a>\n</p>\n</center>\n';
 		        editor.insertSnippet(snippetText);
 		    },
 		    readOnly: false
