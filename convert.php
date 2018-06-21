@@ -101,7 +101,7 @@ if (!empty($_POST)) {
 	if ($input_text != false) {
 
 		// Convert pipes to endashes
-		$finished_html = str_replace(' -- ', ' – ', $input_text);
+		$finished_html = str_replace('--', '–', $input_text);
 
 		$finished_html = go_through_grafs($finished_html);
 		$finished_html = wpautop($finished_html);
