@@ -56,8 +56,8 @@ function go_through_grafs($inputstring) {
 
 function add_ads($inputstring,$template,$template_ads) {
 	$heading_pattern = (in_array($template, array('know','outdoors'))) ? "/<h3>(.+?)<\/h3>/" : "/<h2>(.+?)<\/h2>/";
-	$ad_one = $template_ads['ad_one'];
-	$ad_two = $template_ads['ad_two'];
+	$ad_one = $template_ads['ad_one']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
+	$ad_two = $template_ads['ad_two']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
 	$place_one = ($template == 'spot') ? 1 : 2;
 	$place_two = ($template == 'spot') ? 2 : 4;
 	$counter = 0;
