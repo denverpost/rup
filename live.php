@@ -289,7 +289,7 @@ $nl_type = $fileparts[0];
 		    name: 'insertSub',
 		    bindKey: {win: 'Ctrl-Alt-U',  mac: 'Command-Ctrl-U'},
 		    exec: function(editor) {
-		    	var subNum = 1 + getRandomInt(7);
+		    	var subNum = 1 + getRandomInt(6);
 		    	var snippetText = '<span style="display:block;height:1em;width:100%;"></span>\n<center>\n<p style="text-align: center;margin:0;padding:0;"><a href="http://dpo.st/99cents" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="https://extras.denverpost.com/newsletter/subscribe-' + subNum + '.png" aria-hidden="true" width="90%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:90%;margin:0 auto;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a></p>\n</center>';
 		        editor.insertSnippet(snippetText);
 		    },
