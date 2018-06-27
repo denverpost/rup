@@ -102,18 +102,20 @@ if (!empty($_POST)) {
 
 		// Convert pipes to endashes
 		$finished_html = str_replace('--', '–', $input_text);
-
 		$finished_html = go_through_grafs($finished_html);
 		$finished_html = wpautop($finished_html);
 		$finished_html = add_link_styles($finished_html,$templates[$template]['link_style']);
 		$finished_html = add_ads($finished_html,$template,$templates[$template]);
 
-		$spacer_div = "<span style=\"display:block;height:1em;width:100%;\"></span>";
+	}
+
+	function escape_backreference($x){
+	    return preg_replace('/\$(\d)/', '\\\$$1', $x);
 	}
 
 	if ($template && $finished_html) {
-		$template_raw = preg_replace('/<!--{{BYLINE}}-->(.*?)<!--{{\/BYLINE}}-->/', '<!--{{BYLINE}}-->' . $byline_text . '<!--{{/BYLINE}}-->', $template_raw);
-		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->' . "\n\n" . $finished_html . "\n\n" . '<!--{{/CONTENT}}-->', $template_raw);
+		$template_raw = preg_replace('/<!--{{BYLINE}}-->(.*?)<!--{{\/BYLINE}}-->/', '<!--{{BYLINE}}-->' . escape_backreference($byline_text) . '<!--{{/BYLINE}}-->', $template_raw);
+		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->' . "\n\n" . escape_backreference($finished_html) . "\n\n" . '<!--{{/CONTENT}}-->', $template_raw);
 		$finished_html = $template_raw;
 	}
 	if ($finished_html != false) { file_put_contents('./cache/'.$filename, $finished_html); }
