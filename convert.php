@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once './wp-funcs.php';
+require_once './yt-thumb.php';
 require_once './variables.php';
 require_once './constants.php';
 
@@ -68,21 +69,45 @@ function format_images_with_captions($inputstring) {
 	}
 }
 
+function format_giphy_links($inputstring) {
+	$giphy_start = 'https://giphy.com/';
+	$gp_url_exploded = explode('/', $inputstring);
+	$gp_url_text_exploded = explode('-', $gp_url_exploded[count($gp_url_exploded)-1]);
+	$gp_url_text = $gp_url_text_exploded[count($gp_url_text_exploded)-1];
+	$gp_media_url = 'https://media.giphy.com/media/' . $gp_url_text . '/giphy.gif';
+	$raw_insert = '<span style="display:block;height:1em;width:100%%;"></span>'."\n".'<center>'."\n".'<p style="text-align: center;margin:0;padding:0;">'."\n".'<img src="%1$s" aria-hidden="true" width="80%%" border="0" style="height:auto;background:#ffffff;font-family:sans-serif; width:80%%;font-size:15px;line-height:100%%;color:#555555;display:block;margin:0 auto;">'."\n".'</p>'."\n".'</center>'."\n".'<span style="display:block;height:1em;width:100%%;"></span>'."\n";
+	if (substr($inputstring, 0, strlen($giphy_start)) === $giphy_start) {
+		return sprintf($raw_insert,trim($gp_media_url));
+	} else {
+		return $inputstring;
+	}
+}
+
 function format_twitter_links($inputstring) {
 	$twitter_start = 'https://twitter.com/';
-	$tw_url_exloded = explode('/', $inputstring);
-	$file_name = 'tw_screenshot-'.$tw_url_exloded[count($tw_url_exloded)-1].'.png';
-	$raw_insert = '<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="%1$s" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="%2$s" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n';
+	$tw_url_exploded = explode('/', $inputstring);
+	$file_name = 'tw_screenshot-'.$tw_url_exploded[count($tw_url_exploded)-1].'.png';
+	$raw_insert = '<span style="display:block;height:1em;width:100%%;"></span>'."\n".'<center>'."\n".'<p style="text-align: center;margin:0;padding:0;">'."\n".'<a href="%1$s" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="%2$s" aria-hidden="true" width="80%%" border="0" style="height:auto;background:#ffffff;font-family:sans-serif; width:80%%;font-size:15px;line-height:100%%;color:#555555;display:block;margin:0 auto;"></a>'."\n".'</p>'."\n".'</center>'."\n".'<span style="display:block;height:1em;width:100%%;"></span>'."\n";
 	if (substr($inputstring, 0, strlen($twitter_start)) === $twitter_start) {
 		$tw_screenshot_raw = 'https://audubon-tweets.herokuapp.com/img?url='.$inputstring;
 		$tw_screenshot = file_get_contents($tw_screenshot_raw);
 		file_put_contents('./temp/'.$file_name, $tw_screenshot);
-		$extras_url = 'https://extras.denverpost.com/newsletter/'.$file_name;
+		$extras_url = 'https://extras.denverpost.com/newsletter/screenshots/'.$file_name;
 		if (do_ftp($file_name)) {
 			return sprintf($raw_insert,trim($inputstring),trim($extras_url));
 		} else {
 			return $inputstring;
 		}
+	} else {
+		return $inputstring;
+	}
+}
+
+function format_youtube_links($inputstring) {
+	if ($url_matches = getYouTubeIdFromURL($inputstring)) {
+		$raw_insert = '<span style="display:block;height:1em;width:100%%;"></span>'."\n".'<center>'."\n".'<p style="text-align: center;margin:0;padding:0;">'."\n".'<a href="%1$s" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="%2$s" aria-hidden="true" width="80%%" border="0" style="height:auto;background:#ffffff;font-family:sans-serif; width:80%%;font-size:15px;line-height:100%%;color:#555555;display:block;margin:0 auto;"></a>'."\n".'</p>'."\n".'</center>'."\n".'<span style="display:block;height:1em;width:100%%;"></span>'."\n";
+		$yt_thumb_url = 'https://extras.denverpost.com/newsletter/screenshots/'.getYoutubeThumb($url_matches);
+		return sprintf($raw_insert,trim($inputstring),trim($yt_thumb_url));
 	} else {
 		return $inputstring;
 	}
@@ -94,7 +119,8 @@ function go_through_grafs($inputstring) {
 		$line = format_images_without_captions($line);
 		$line = format_images_with_captions($line);
 		$line = format_twitter_links($line);
-		//$line = format_youtube_links($line);
+		$line = format_youtube_links($line);
+		$line = format_giphy_links($line);
 		$out[] = trim($line);
 	}
 	return implode("\r\n", $out);
@@ -155,13 +181,12 @@ if (!empty($_POST)) {
 		$finished_html = add_ads($finished_html,$template,$templates[$template]);
 
 	}
-/*
 	if ($template && $finished_html) {
 		$template_raw = preg_replace('/<!--{{BYLINE}}-->(.*?)<!--{{\/BYLINE}}-->/', '<!--{{BYLINE}}-->' . escape_backreference($byline_text) . '<!--{{/BYLINE}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->' . "\n\n" . escape_backreference($finished_html) . "\n\n" . '<!--{{/CONTENT}}-->', $template_raw);
 		$finished_html = $template_raw;
 	}
-	if ($finished_html != false) { file_put_contents('./cache/'.$filename, $finished_html); } */
+	if ($finished_html != false) { file_put_contents('./cache/'.$filename, $finished_html); }
 }
 
 ?>
@@ -263,7 +288,7 @@ if (!empty($_POST)) {
 				</div>
 				<div class="large-12 columns">
 					<fieldset>
-						<input type="submit" class="button" style="width:100%;" value="PROCESS WORDPRESS INTO HTML" />
+						<input type="submit" class="button" id="process_btn" style="width:100%;" value="PROCESS WORDPRESS INTO HTML" />
 					</fieldset>
 					<fieldset>
 						<legend> Processed output </legend>
@@ -285,10 +310,13 @@ if (!empty($_POST)) {
 		      </div>
 		    </div>
 		</footer>
-
+		<div id="wait_gif" style="background-color:rgba(255,255,255,0.6);background-repeat:no-repeat;background-image:url('./wait.gif');background-position:center center;position:fixed;top:0;left:0;height:100%;width:100%;pointer-events:none;z-index:99999;display:none;"></div>
 	<script src="//extras.denverpost.com/foundation/js/foundation.min.js"></script>
 	<script>
 		$(document).foundation();
+		$('#process_btn').on('click',function() {
+			$('#wait_gif').css('display','block');
+		});
 		function copyOutput() {
 		    $("output_text").select();
 		    document.execCommand('copy');
