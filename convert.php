@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 
 require_once './wp-funcs.php';
 require_once './variables.php';
+require_once './constants.php';
 
 $bylines = array(
 	'none' => array('No byline',false,false),
@@ -21,6 +22,27 @@ $byline_raw = '<p style="-ms-text-size-adjust:100%%;-webkit-text-size-adjust:100
                     <br /><a href="mailto:%2$s?subject=Newsletter%%20Feedback" title="Email %1$s @ The Denver Post" style="-ms-text-size-adjust:100%%;-webkit-text-size-adjust:100%%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">%2$s</a> / <a href="https://twitter.com/%3$s" title="@%3$s on Twitter" style="-ms-text-size-adjust:100%%;-webkit-text-size-adjust:100%%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@%3$s</a></p>';
 
 $author = $newsletter_date = $filename = $template = $input_text = $finished_html = false;
+
+function do_ftp($files) {
+    $conn_id = ftp_connect(FTP_SERVER) or die("Couldn't connect to $ftp_server");
+    ftp_login($conn_id,FTP_USER_NAME,FTP_USER_PASS);
+    ftp_pasv($conn_id, TRUE);    
+    if ($files) {
+        if (ftp_put($conn_id, FTP_DIRECTORY.'/screenshots/'.$files, './temp/'.$files, FTP_BINARY)) {
+            unlink('./temp/'.$files);
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+    ftp_close($conn_id);
+}
+
+function escape_backreference($x){
+    return preg_replace('/\$(\d)/', '\\\$$1', $x);
+}
 
 function add_link_styles($inputstring, $template_style) {
 	if (preg_match('/<a.+?href="(.+?)">/', $inputstring)) {
@@ -46,10 +68,34 @@ function format_images_with_captions($inputstring) {
 	}
 }
 
+function format_twitter_links($inputstring) {
+	$twitter_start = 'https://twitter.com/';
+	$tw_url_exloded = explode('/', $inputstring);
+	$file_name = 'tw_screenshot-'.$tw_url_exloded[count($tw_url_exloded)-1].'.png';
+	$raw_insert = '<center>\n<p style="text-align: center;margin:0;padding:0;">\n<a href="%1$s" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="%2$s" aria-hidden="true" width="680" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;"></a>\n</p>\n</center>\n';
+	if (substr($inputstring, 0, strlen($twitter_start)) === $twitter_start) {
+		$tw_screenshot_raw = 'https://audubon-tweets.herokuapp.com/img?url='.$inputstring;
+		$tw_screenshot = file_get_contents($tw_screenshot_raw);
+		file_put_contents('./temp/'.$file_name, $tw_screenshot);
+		$extras_url = 'https://extras.denverpost.com/newsletter/'.$file_name;
+		if (do_ftp($file_name)) {
+			return sprintf($raw_insert,trim($inputstring),trim($extras_url));
+		} else {
+			return $inputstring;
+		}
+	} else {
+		return $inputstring;
+	}
+}
+
 function go_through_grafs($inputstring) {
 	$out = array();
 	foreach (preg_split("/((\r?\n)|(\r\n?))/", $inputstring) as $line) {
-		$out[] = trim(format_images_with_captions(format_images_without_captions($line)));
+		$line = format_images_without_captions($line);
+		$line = format_images_with_captions($line);
+		$line = format_twitter_links($line);
+		//$line = format_youtube_links($line);
+		$out[] = trim($line);
 	}
 	return implode("\r\n", $out);
 }
@@ -102,23 +148,20 @@ if (!empty($_POST)) {
 
 		// Convert pipes to endashes
 		$finished_html = str_replace('--', '–', $input_text);
+		$finished_html = str_replace('<div class="mceTemp"></div>', "\n", $input_text);
 		$finished_html = go_through_grafs($finished_html);
 		$finished_html = wpautop($finished_html);
 		$finished_html = add_link_styles($finished_html,$templates[$template]['link_style']);
 		$finished_html = add_ads($finished_html,$template,$templates[$template]);
 
 	}
-
-	function escape_backreference($x){
-	    return preg_replace('/\$(\d)/', '\\\$$1', $x);
-	}
-
+/*
 	if ($template && $finished_html) {
 		$template_raw = preg_replace('/<!--{{BYLINE}}-->(.*?)<!--{{\/BYLINE}}-->/', '<!--{{BYLINE}}-->' . escape_backreference($byline_text) . '<!--{{/BYLINE}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->' . "\n\n" . escape_backreference($finished_html) . "\n\n" . '<!--{{/CONTENT}}-->', $template_raw);
 		$finished_html = $template_raw;
 	}
-	if ($finished_html != false) { file_put_contents('./cache/'.$filename, $finished_html); }
+	if ($finished_html != false) { file_put_contents('./cache/'.$filename, $finished_html); } */
 }
 
 ?>
