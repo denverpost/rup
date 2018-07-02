@@ -17,6 +17,7 @@ $bylines = array(
 	'ehernandez' => array('Elizabeth Hernandez', 'ehernandez@denverpost.com', 'ehernandez'),
 	'jpaul' => array('Jesse Paul', 'jpaul@denverpost.com', 'JesseAPaul'),
 	'sgrant' => array('Sara Grant', 'sgrant@denverpost.com', 'ItsMeSaraG'),
+	'dworthington' => array('Danika Worthington', 'dworthington@denverpost.com', 'Dani_Worth'),
 );
 
 $byline_raw = '<p style="-ms-text-size-adjust:100%%;-webkit-text-size-adjust:100%%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By %1$s
