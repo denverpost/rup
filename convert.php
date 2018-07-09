@@ -105,7 +105,8 @@ function format_twitter_links($inputstring) {
 }
 
 function format_youtube_links($inputstring) {
-	if ($url_matches = getYouTubeIdFromURL($inputstring)) {
+	$youtube_start = 'https://twitter.com/';
+	if ($url_matches = getYouTubeIdFromURL($inputstring) && substr($inputstring, 0, strlen($youtube_start)) === $youtube_start) {
 		$raw_insert = '<span style="display:block;height:1em;width:100%%;"></span>'."\n".'<center>'."\n".'<p style="text-align: center;margin:0;padding:0;">'."\n".'<a href="%1$s" style="text-decoration:none !important;border:none!important;" style="color:#CE4815;font-weight:bold;text-decoration:none;"><img src="%2$s" aria-hidden="true" width="80%%" border="0" style="height:auto;background:#ffffff;font-family:sans-serif; width:80%%;font-size:15px;line-height:100%%;color:#555555;display:block;margin:0 auto;"></a>'."\n".'</p>'."\n".'</center>'."\n".'<span style="display:block;height:1em;width:100%%;"></span>'."\n";
 		$yt_thumb_url = 'https://extras.denverpost.com/newsletter/screenshots/'.getYoutubeThumb($url_matches);
 		return sprintf($raw_insert,trim($inputstring),trim($yt_thumb_url));
@@ -128,11 +129,12 @@ function go_through_grafs($inputstring) {
 }
 
 function add_ads($inputstring,$template,$template_ads) {
-	$heading_pattern = (in_array($template, array('know','outdoors'))) ? "/<h3>(.+?)<\/h3>/" : "/<h2>(.+?)<\/h2>/";
+	$heading_pattern = "/<h2>(.+?)<\/h2>/";
+	preg_match_all($heading_pattern, $inputstring, $matches);
 	$ad_one = $template_ads['ad_one']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
 	$ad_two = $template_ads['ad_two']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
-	$place_one = ($template == 'spot') ? 1 : 2;
-	$place_two = ($template == 'spot') ? 2 : 4;
+	$place_one = ($template == 'spot' || count($matches[0]) < 3) ? 1 : 2;
+	$place_two = ($template == 'spot' || count($matches[0]) < 3) ? 2 : 4;
 	$counter = 0;
 	$inputstring = preg_replace_callback($heading_pattern, function ($m) use (&$counter,&$place_one,&$place_two,&$ad_one,&$ad_two) {
 		$counter++;
@@ -175,7 +177,9 @@ if (!empty($_POST)) {
 
 		// Convert pipes to endashes
 		$finished_html = str_replace('--', '–', $input_text);
-		$finished_html = str_replace('<div class="mceTemp"></div>', "\n", $input_text);
+		$finished_html = str_replace('<h3>', '<h2>', $finished_html);
+		$finished_html = str_replace('</h3>', '</h2>', $finished_html);
+		$finished_html = str_replace('<div class="mceTemp"></div>', "\n", $finished_html);
 		$finished_html = go_through_grafs($finished_html);
 		$finished_html = wpautop($finished_html);
 		$finished_html = add_link_styles($finished_html,$templates[$template]['link_style']);
