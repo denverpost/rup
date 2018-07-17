@@ -183,10 +183,10 @@ $nl_type = $fileparts[0];
 		    exec: function(editor) {
 		    	var origText = editor.session.getTextRange(editor.getSelectionRange());
 		    	if (origText == '') {
-			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;padding:0 1em;line-height:1.3em;margin-bottom:.2em;">\n$0\n</blockquote>\n<p style="margin-top:0;font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
+			    	var snippetText = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.1em;color:#787878;border-left: 2px solid #ccc;padding:0 .5em;line-height:1.3em;margin-bottom:.2em;margin-left:.5em;">\n$0\n</blockquote>\n<p style="margin-top:0;font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
 			        editor.insertSnippet(snippetText);
 		        } else {
-		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.2em;color:#555555;border-left: 2px solid #ccc;padding:0 1em;line-height:1.3em;margin-bottom:.2em;">\n' + origText + '\n</blockquote>\n<p style="margin-top:0;font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
+		            var link = '<blockquote style="font-family:serif;font-weight:bold;font-size:1.1em;color:#787878;border-left: 2px solid #ccc;padding:0 .5em;line-height:1.3em;margin-bottom:.2em;margin-left:.5em;">\n' + origText + '\n</blockquote>\n<p style="margin-top:0;font-family:serif;color:#800000;text-align:right;font-weight:bold;font-style:italic;">QUOTE_CREDIT_GOES_HERE</p>';
 			        editor.session.replace(editor.selection.getRange(), link);
 			    }
 		    },

@@ -54,6 +54,14 @@ function add_link_styles($inputstring, $template_style) {
 	}
 }
 
+function add_quote_styles($inputstring) {
+	if (preg_match('/<blockquote>/', $inputstring)) {
+		return preg_replace('/<blockquote>/', '<blockquote style="font-family:serif;font-weight:bold;font-size:1.1em;color:#787878;border-left: 2px solid #ccc;padding:0 .5em;line-height:1.3em;margin-bottom:.2em;margin-left:.5em;">', $inputstring);
+	} else {
+		return $inputstring;
+	}
+}
+
 function format_images_without_captions($inputstring) {
 	if (preg_match('/^<img\s.*?\bsrc="(.*?)".*?>/si', $inputstring)) {
 		return preg_replace('/^<img\s.*?\bsrc="(.*?)".*?>/si', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>', $inputstring);
@@ -133,8 +141,8 @@ function add_ads($inputstring,$template,$template_ads) {
 	preg_match_all($heading_pattern, $inputstring, $matches);
 	$ad_one = $template_ads['ad_one']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
 	$ad_two = $template_ads['ad_two']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
-	$place_one = ($template == 'spot' || count($matches[0]) < 3) ? 1 : 2;
-	$place_two = ($template == 'spot' || count($matches[0]) < 3) ? 2 : 4;
+	$place_one = (count($matches[0]) <= 3) ? 1 : 3;
+	$place_two = (count($matches[0]) <= 3) ? 2 : 5;
 	$counter = 0;
 	$inputstring = preg_replace_callback($heading_pattern, function ($m) use (&$counter,&$place_one,&$place_two,&$ad_one,&$ad_two) {
 		$counter++;
@@ -182,6 +190,7 @@ if (!empty($_POST)) {
 		$finished_html = str_replace('<div class="mceTemp"></div>', "\n", $finished_html);
 		$finished_html = go_through_grafs($finished_html);
 		$finished_html = wpautop($finished_html);
+		$finished_html = add_quote_styles($finished_html);
 		$finished_html = add_link_styles($finished_html,$templates[$template]['link_style']);
 		$finished_html = add_ads($finished_html,$template,$templates[$template]);
 
