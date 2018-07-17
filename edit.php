@@ -111,7 +111,7 @@ if (empty($_POST) && $file != false && file_exists('./cache/'.$file)) {
 }
 if ($blank == true || !empty($_POST)) {
 	$input_text = isset($_POST['input_text']) ? $_POST['input_text'] : false;
-	$template = isset($_POST['templates']) ? 'template-'.$_POST['templates'].'.html' : false;
+	$template = isset($_POST['templates']) ? 'template-'.$_POST['templates'].'-editor.html' : false;
 	$author = isset($_POST['authors']) ? $_POST['authors'] : false;
 	$byline_text = ($author != false) ? $bylines[$author]['byline'] : '';
 	if ($author == 'hernandez') {
