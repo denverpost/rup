@@ -5,12 +5,25 @@ ini_set('display_errors', 1);
 
 require_once './variables.php';
 
+$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+$restore = (isset($_GET['restore'])) ? $_GET['restore'] : false;
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 
-if ($file != false && isset($_POST['editor_html'])) {
+if (!$restore && $file != false && isset($_POST['editor_html'])) {
+	if (file_exists('./cache/'.$file)) {
+		copy('./cache/'.$file, './cache/'.$file.'.bak');
+	}
 	file_put_contents('./cache/'.$file,html_entity_decode($_POST['editor_html']));
+} else if ($restore) {
+	if (file_exists('./cache/'.$file.'.bak')) {
+		copy('./cache/'.$file.'.bak', './cache/'.$file);
+	}
+	$actual_link = str_replace('&restore=1', '', $actual_link);
+	header("Location:$actual_link");
 }
 
+$editor_html = false;
 $editor_html = file_get_contents('./cache/'.$file);
 $fileparts = explode('-', $file);
 $nl_type = $fileparts[0];
@@ -84,16 +97,22 @@ $nl_type = $fileparts[0];
 						<iframe src="<?php echo './cache/'.$file; ?>" id="editor_view"></iframe>
 					</div>
 				</div>
-				<div class="row" style="overflow:hidden;max-width:60%!important;">
-					<div class="large-4 columns" style="padding-top:1em;">
+				<div class="row" style="overflow:hidden;max-width:90%!important;">
+					<div class="large-2 large-push-1 columns" style="padding-top:1em;">
 						<a href="#" data-reveal-id="myModal">
-							<button class="button" style="width:100%;text-align:center;">HOTKEY REMINDER</button>
+							<button class="button success" style="width:100%;text-align:center;">HOTKEY REMINDER</button>
 						</a>
 					</div>
-					<div class="large-4 columns" style="padding-top:1em;">
-						<button class="button" style="width:100%;text-align:center;" id="download_file_button">DOWNLOAD FILE</button>
+					<div class="large-2 large-push-1 columns" style="padding-top:1em;">
+						<a href="<?php echo $actual_link.'&restore=1'; ?>" style="width:100%;" class="button alert">RESTORE LAST</a>
 					</div>
-					<div class="large-4 columns" style="padding-top:1em;">
+					<div class="large-2 large-push-1 columns" style="padding-top:1em;">
+						<button class="button warning" style="width:100%;text-align:center;" id="download_file_button">DOWNLOAD FILE</button>
+					</div>
+					<div class="large-2 large-push-1 columns" style="padding-top:1em;">
+						<a href="javascript:copyOutput();" style="width:100%;" class="button warning"<?php echo ($editor_html == false) ? ' disabled' : ''; ?>>COPY HTML</a>
+					</div>
+					<div class="large-2 large-push-1 columns" style="padding-top:1em;">
 						<input type="submit" value="UPDATE SAVED FILE" class="button" id="update_file_button"style="width:100%;text-align:center;" disabled />
 					</div>
 					<input type="hidden" id="editor_html" name="editor_html" value="<?php echo htmlentities($editor_html); ?>" />
@@ -130,6 +149,7 @@ $nl_type = $fileparts[0];
 		</ul>
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
+	<textarea id="editor_copy" style="height:0;width:0;color:transparent;background:transparent;position:fixed;"></textarea>
 
 	<script src="//extras.denverpost.com/foundation/js/foundation.min.js"></script>
 	<script>
@@ -310,9 +330,11 @@ $nl_type = $fileparts[0];
 	<script>
 		var unsaved = false;
         $(document).ready(function(){
+        	$("#editor_copy").html(htmlEntities(editor.getValue()));
         	editor.getSession().on('change', function(e) {
 			    $("#editor_view").contents().find('html').html(editor.getValue());
 			    $("#editor_html").val(htmlEntities(editor.getValue()));
+			    $("#editor_copy").html(htmlEntities(editor.getValue()));
 			    if (unsaved == false) {
 				    $('#update_file_button').removeAttr('disabled');
 				    unsaved = true;
@@ -341,7 +363,11 @@ $nl_type = $fileparts[0];
 		adjustHeight();
 		$(window).resize(function(){
 			adjustHeight();
-		})
+		});
+		function copyOutput() {
+		    $("#editor_copy").select();
+		    document.execCommand('copy');
+		}
 	</script>
 </body>
 </html>

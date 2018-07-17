@@ -141,8 +141,9 @@ function add_ads($inputstring,$template,$template_ads) {
 	preg_match_all($heading_pattern, $inputstring, $matches);
 	$ad_one = $template_ads['ad_one']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
 	$ad_two = $template_ads['ad_two']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
-	$place_one = (count($matches[0]) <= 3) ? 1 : 3;
-	$place_two = (count($matches[0]) <= 3) ? 2 : 5;
+	$place_one = (count($matches[0]) <= 3) ? 1 : 2;
+	$place_two = (count($matches[0]) <= 3) ? 2 : 4;
+	$place_two = ($template == 'roundup') ? 5 : $place_two;
 	$counter = 0;
 	$inputstring = preg_replace_callback($heading_pattern, function ($m) use (&$counter,&$place_one,&$place_two,&$ad_one,&$ad_two) {
 		$counter++;
