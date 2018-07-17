@@ -17,7 +17,10 @@ if (!$restore && $file != false && isset($_POST['editor_html'])) {
 	file_put_contents('./cache/'.$file,html_entity_decode($_POST['editor_html']));
 } else if ($restore) {
 	if (file_exists('./cache/'.$file.'.bak')) {
-		copy('./cache/'.$file.'.bak', './cache/'.$file);
+		copy('./cache/'.$file.'.bak', './cache/'.$file.'.temp');
+		copy('./cache/'.$file, './cache/'.$file.'.bak');
+		copy('./cache/'.$file.'.temp', './cache/'.$file);
+		unlink('./cache/'.$file.'.temp');
 	}
 	$actual_link = str_replace('&restore=1', '', $actual_link);
 	header("Location:$actual_link");
