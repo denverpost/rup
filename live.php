@@ -337,7 +337,6 @@ $nl_type = $fileparts[0];
         	editor.getSession().on('change', function(e) {
 			    $("#editor_view").contents().find('html').html(editor.getValue());
 			    $("#editor_html").val(htmlEntities(editor.getValue()));
-			    $("#editor_copy").html(htmlEntities(editor.getValue()));
 			    if (unsaved == false) {
 				    $('#update_file_button').removeAttr('disabled');
 				    unsaved = true;
@@ -368,6 +367,7 @@ $nl_type = $fileparts[0];
 			adjustHeight();
 		});
 		function copyOutput() {
+		    $("#editor_copy").html(htmlEntities(editor.getValue()));
 		    $("#editor_copy").select();
 		    document.execCommand('copy');
 		}
