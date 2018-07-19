@@ -1,4 +1,7 @@
 <?php
+/**
+ * Returns the contents of a file as a download (rather than displaying them, since it's HTML files we're dealing with)
+ */
 	if(!empty($_GET['filename'])) {
 	    // Fetch the file info.
 	    $filePath = realpath('./cache/'.$_GET['filename'].'.html');
@@ -27,5 +30,6 @@
 	}
 ?>
 <script>
+	// close when done
 	window.close();
 </script>

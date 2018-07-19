@@ -3,6 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Error handling when submitting "Create New Roundup" form
 $errmsg = $all = false;
 if (!empty($_POST)) {
 	if (isset($_POST['new_date'])) {
@@ -20,6 +21,7 @@ if (!empty($_POST)) {
 	$all = ($list == 'all') ? true : false;
 }
 
+// Gets a list of all the available newsletter files
 $files_listed = array();
 if ($handle = opendir('./cache')) {
     while (false !== ($file = readdir($handle))) {
@@ -31,14 +33,17 @@ if ($handle = opendir('./cache')) {
     closedir($handle);
 }
 
+// Sorts the list of files by both newsletter type and date
 sort($files_listed, SORT_NATURAL);
 $files_listed = array_reverse($files_listed);
 
 $files_list = array();
 $files_types = array();
 foreach ($files_listed as $file) {
+	// If the "see all" button was clicked, just add all the files to the display list
 	if ($all) {
 		$files_list[] = $file;
+		// otherwise limit them to 5:
 	} else {
 		$fileparts = explode('-', $file);
 		$nl_type = $fileparts[0];

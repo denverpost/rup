@@ -1,11 +1,16 @@
 <?php
 
+/**
+ * The file for creating a Roundup from OneTab; can be done with convert.php now
+ */
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once('./simple_html_dom.php');
 require_once('./format.php');
 
+// Here's the bylines for creating a Roundup the old way
 $bylines = array(
 	'schneider' => array(
 		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Daniel J. Schneider
@@ -34,6 +39,7 @@ $bylines = array(
                   	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:ehernandez@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at ehernandez@denverpost.com</a> or <a href="https://twitter.com/ehernandez" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>')
 	);
 
+// Fix some sources used frequently in What We're Reading
 function source_span($input) {
 	$input = str_replace('.com','',$input);
 	switch ($input) {
@@ -77,12 +83,14 @@ function source_span($input) {
 	return ($source_name) ? sprintf(' <span style="font-style:italic;font-weight:bold;color:maroon;font-family:serif">&mdash; %s</span>',$source_name) : '';
 }
 
+// Setup for OneTab processing
 $link_count = 0;
 $schcheck = 'checked';
 $hercheck = $cracheck = $rubcheck = $ngucheck = '';
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 $links_processed = $input_text = $blank = $byline_text_file = $content_text_file = $intro_text_file = $sotd_text_file = $playlist_text_file = $correx_text_file = false;
 
+// Adds inline style to a links
 function add_link_styles($inputstring) {
 	if ( ! preg_match('/\<a(.+?)style="(.+?)"(.+?)\>/',$inputstring) ) {
 		return preg_replace('/\<a href="(.+?)"\>/', '<a href="$1" style="border-bottom:1px dashed;padding:2px 0;text-decoration:none;color:#13618D;font-weight:bold;">', $inputstring);
@@ -91,6 +99,7 @@ function add_link_styles($inputstring) {
 	}
 }
 
+// If the form was called for a file that already exists, fill out the form with the values in the file if possible
 if (empty($_POST) && $file != false && file_exists('./cache/'.$file)) {
 	$length = strlen(file_get_contents('./cache/'.$file));
 	if ($length>1) {
@@ -109,11 +118,14 @@ if (empty($_POST) && $file != false && file_exists('./cache/'.$file)) {
 		$blank = true;
 	}
 }
+// Form was caled for a date with no extant file
 if ($blank == true || !empty($_POST)) {
+	// get POST data
 	$input_text = isset($_POST['input_text']) ? $_POST['input_text'] : false;
 	$template = isset($_POST['templates']) ? 'template-'.$_POST['templates'].'-editor.html' : false;
 	$author = isset($_POST['authors']) ? $_POST['authors'] : false;
 	$byline_text = ($author != false) ? $bylines[$author]['byline'] : '';
+	// Hack-y way to set which radio button to check for authors ... unnecessary in this context?
 	if ($author == 'hernandez') {
 		$schcheck = '';
 		$hercheck = 'checked';
@@ -134,8 +146,10 @@ if ($blank == true || !empty($_POST)) {
 	$sotd_text = isset($_POST['sotd_text']) ? $_POST['sotd_text'] : false;
 	$correx_text = ( isset($_POST['correx_text']) && strlen($_POST['correx_text']) > 1 ) ? $_POST['correx_text'] : ( ( ($author != false) && isset($bylines[$author]) && isset($bylines[$author]['correx']) ) ? $bylines[$author]['correx'] : false );
 
+	// Get raw template from disk
 	$template_raw = ($template) ? file_get_contents('./'.$template) : false;
 
+	// If we have OneTab stuff
 	if ($input_text != false) {
 
 		// Remove line breaks
@@ -151,8 +165,7 @@ if ($blank == true || !empty($_POST)) {
 		// Strip all the icon codes
 		$inputfile = preg_replace('/<img src="https\:\/\/www\.google\.com\/s2\/favicons\?domain=(.*?)" style="vertical-align\: middle\; width\:16px\; height\:16px">/', '', $inputfile);
 
-		// Replace additional surrounding HTML with nothing
-
+		// Replace a variety of additional surrounding HTML with nothing
 		$inputfile = preg_replace('/<!DOCTYPE html(.*?)About OneTab/', '', $inputfile);
 		$inputfile = trim(preg_replace('/<\/a><\/span><\/div>( *)<\/div>/', '', $inputfile));
 		$inputfile = trim(str_replace('<div style="padding-bottom: 0px; border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: rgb(221, 221, 221);"></div>', '', $inputfile));
@@ -166,8 +179,6 @@ if ($blank == true || !empty($_POST)) {
 		$inputfile = trim(preg_replace('/<div style="padding-top:0px;">(\s*)<\/div>/', '', $inputfile));
 		$inputfile = trim(str_replace('<div style="padding-top:0px;"></div>', '', $inputfile));
 		$inputfile = trim(str_replace('<div style="padding-top:0px;"></div>', '', $inputfile));
-
-		
 
 		// Close those paragraph tags
 		$inputfile = str_replace('</a> </div>', "</a></p>", $inputfile);
@@ -190,31 +201,35 @@ if ($blank == true || !empty($_POST)) {
 		// Change ugly divs to simple paragraphs
 		$inputfile = str_replace(' <div style="padding-left: 24px; padding-top: 8px; position: relative; font-size: 13px;">  <a', '<p>+ <a', $inputfile);
 
+		// Homogenize line breaks
 		$inputfile = preg_replace('/(\n)+/m', "\n", $inputfile);
 
+		// convert to a DOM object
 		$html = new simple_html_dom();
-
 		$html->load($inputfile,true,false);
 
+		// Delete everything outside of DIVs
 		foreach($html->find('div') as $div) {
 			$div->outertext = '';
 		}
 
 		$html->save();
 
+		// Then delete the DIVs
 		foreach($html->find('div') as $div) {
 			$div->outertext = NULL;
 		}
 
 		$html->save();
 
+		// Go through the links
 		foreach($html->find('a[href]') as $link) {
 			$link_count++;
 			$link_override = false;
 			$src = $link->href;
 			$text = $link->innertext;
 			$source_text = '';
-
+			// Handle twitter links cause they're special
 			$re = '/(.*) – (.*)/s';
 			if ( preg_match('/ on Twitter: "/', $text) == 1) {
 				preg_match_all('/(.*) on Twitter: "(.*)/', $text, $twmatches);
@@ -232,17 +247,19 @@ if ($blank == true || !empty($_POST)) {
 				$text = $matches[1][0];
 			}
 
+			// replace quotes with something standard
 			$quotesearch = array("\xe2\x80\x9c", "\xe2\x80\x9d", "\xe2\x80\x98", "\xe2\x80\x99");
 			$quotereplace = array('"', '"', "'", "'");
 			 
 			$text = str_replace($quotesearch, $quotereplace, $text);
 			
-			//echo "\n".'Corrected: '.strtok($src,'?')."\n";
+			// attempt to strip links GA variables
 			$link->href = ($link_override !== false) ? $link_override : ( strpos($src, 'utm_' !== false) ? strtok($src,'?') : $src );
 			$link->title = $link->href;
 			$link->innertext = $text.$source_text;
 		}
 
+		// Still stripping a lot of very specific stuff we haven't already caught by here
 		$links_processed = $html->save();
 		$links_format = new Format;
 		$links_processed = $links_format->HTML($links_processed);
@@ -263,10 +280,12 @@ if ($blank == true || !empty($_POST)) {
 
 	}
 
+	// Escapes dollar singns in a string so they aren't removed by preg_replace
 	function escape_backreference($x){
 	    return preg_replace('/\$(\d)/', '\\\$$1', $x);
 	}
 
+	// Insert finished pieces into raw template HTML
 	if ($template) {
 		$template_raw = preg_replace('/<!--{{BYLINE}}-->(.*?)<!--{{\/BYLINE}}-->/', '<!--{{BYLINE}}-->'.escape_backreference($byline_text).'<!--{{/BYLINE}}-->', $template_raw);
 		$template_raw = preg_replace('/<!--{{CONTENT}}-->(.*?)<!--{{\/CONTENT}}-->/', '<!--{{CONTENT}}-->'."\n\n".escape_backreference($links_processed)."\n\n".'<!--{{/CONTENT}}-->', $template_raw);
@@ -275,6 +294,7 @@ if ($blank == true || !empty($_POST)) {
 		$template_raw = preg_replace('/<!--{{CORREX}}-->(.*?)<!--{{\/CORREX}}-->/', '<!--{{CORREX}}-->'.add_link_styles(escape_backreference($correx_text)).'<!--{{/CORREX}}-->', $template_raw);
 		$links_processed = $template_raw;
 	}
+	// Save finished file
 	if ($file != false) { file_put_contents('./cache/'.$file,$links_processed); }
 }
 
@@ -413,6 +433,7 @@ if ($blank == true || !empty($_POST)) {
 	<script src="//extras.denverpost.com/foundation/js/foundation.min.js"></script>
 	<script>
 		$(document).foundation();
+		// Function to put a blank Song of the Day format inthe input box
 		function populateSOTD() {
 			var SOTDstring = '<p><strong>Song:</strong> &ldquo;<a href="YOUTUBE_LINK_HERE" title="YOUTUBE_LINK_HERE">SONG_TITLE_HERE</a>&rdquo;</p>\n' +
 '<p><strong>Artist:</strong> ARTIST_NAME_HERE</p>\n' +

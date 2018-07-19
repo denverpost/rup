@@ -3,28 +3,40 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Get stored imrformation about each newsletter, including ad tags
 require_once './variables.php';
 
+// Get the URL of the page request
 $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
+// Get the POST values if they are set (i.e. form sbumit)
 $restore = (isset($_GET['restore'])) ? $_GET['restore'] : false;
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 
+// If the Restore function hasn't been called, and we have a filename and newsletter content
 if (!$restore && $file != false && isset($_POST['editor_html'])) {
+	// If the newsletter already has a file, make a backuo version of it
 	if (file_exists('./cache/'.$file)) {
 		copy('./cache/'.$file, './cache/'.$file.'.bak');
 	}
+	// Then store the passed editor content to in the file
 	file_put_contents('./cache/'.$file,html_entity_decode($_POST['editor_html']));
 } else if ($restore) {
+	// We're trying to restore -- copy the previous version of the file to temp,
+	// copy the backup over the current file, and then the temp version's copy to the current file 
+	// and then open it
 	if (file_exists('./cache/'.$file.'.bak')) {
 		copy('./cache/'.$file.'.bak', './cache/'.$file.'.temp');
 		copy('./cache/'.$file, './cache/'.$file.'.bak');
 		copy('./cache/'.$file.'.temp', './cache/'.$file);
+		// delete the temp version
 		unlink('./cache/'.$file.'.temp');
 	}
 	$actual_link = str_replace('&restore=1', '', $actual_link);
 	header("Location:$actual_link");
 }
+
+// Set up empty variables and get the file data
 
 $editor_html = false;
 $editor_html = file_get_contents('./cache/'.$file);
@@ -160,26 +172,29 @@ $nl_type = $fileparts[0];
 	</script>
 	<script src="./ace/ace.js" charset="utf-8"></script>
 	<script>
+		// JS doesn't have a native way to do this, so we wrote one
 		function htmlEntities(str) {
 			return String(str).replace(/\u00A0/g, '&nbsp;').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 		}
+		// A better way to get a random number
 		function getRandomInt(max) {
 			return Math.floor(Math.random() * Math.floor(max));
 		}
+		// ACE editor basic options
 	    var editor = ace.edit("editor_content");
 	    editor.setTheme("ace/theme/monokai_bright");
 	    editor.getSession().setMode("ace/mode/html");
 	    ace.config.loadModule('ace/ext/language_tools');
 	    editor.$blockScrolling = Infinity
-    	
-    	//editor.insertSnippet(snippetText);
-
 	    editor.getSession().setUseWrapMode(true);
 	    editor.setShowPrintMargin(false);
 	    for (key in editor.keyBinding.$defaultHandler.commandKeyBinding) {
 		    if (key == "ctrl-l" && key == "command-l")
 		        delete editor.keyBinding.$defaultHandler.commandKeyBinding[key]
 		}
+		/**
+		 * Where all the Hotkeys are defined. The SupportSubscribe message is what uses the random func above
+		 */
 	    editor.commands.addCommand({
 		    name: 'wrapBold',
 		    bindKey: {win: 'Ctrl-B',  mac: 'Command-B'},
@@ -331,24 +346,32 @@ $nl_type = $fileparts[0];
 
 	</script>
 	<script>
+		// used to control whether Save button activates
 		var unsaved = false;
         $(document).ready(function(){
         	$("#editor_copy").html(htmlEntities(editor.getValue()));
+        	// stuff that happens every time you type anything in the editor side
         	editor.getSession().on('change', function(e) {
+        		// Changes the content of the editor window
 			    $("#editor_view").contents().find('html').html(editor.getValue());
+			    // Changes the content of the iframe/view window
 			    $("#editor_html").val(htmlEntities(editor.getValue()));
+			    // enables the Save button after the first change is made
 			    if (unsaved == false) {
 				    $('#update_file_button').removeAttr('disabled');
 				    unsaved = true;
 				}
 			});
+			// Sets up the download button, which, since the target file is HTML, isn't as easy as you think
 			document.getElementById('download_file_button').onclick = function() {
 				filename = './download.php?filename=<?php echo str_replace('.html','',$file); ?>';
 				window.open(filename, '_blank');
 			}
+			// Resets Svae button on save
 			document.getElementById('update_file_button').onclick = function() {
 				unsaved=false;
 			}
+			// Warns before closing the tab or navigating away if unsaved
 			window.onbeforeunload = function(){
 				if (unsaved) {
 					return 'Are you sure you want to leave?';
@@ -357,6 +380,7 @@ $nl_type = $fileparts[0];
         });
 	</script>
 	<script>
+		// Makes the editor and display DOM elements fit to the height of the window you're using for semi-responsiveness (and easier scrolling on a variety of screens)
 		function adjustHeight(){
 			var window_height = (window.innerHeight-175)+'px';
 			$('#editor_content').css('height',window_height);
@@ -366,6 +390,7 @@ $nl_type = $fileparts[0];
 		$(window).resize(function(){
 			adjustHeight();
 		});
+		// Copy button functionality
 		function copyOutput() {
 		    $("#editor_copy").html(htmlEntities(editor.getValue()));
 		    $("#editor_copy").select();
