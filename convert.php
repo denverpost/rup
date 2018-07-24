@@ -20,6 +20,7 @@ $bylines = array(
 	'jpaul' => array('Jesse Paul', 'jpaul@denverpost.com', 'JesseAPaul'),
 	'sgrant' => array('Sara Grant', 'sgrant@denverpost.com', 'ItsMeSaraG'),
 	'dworthington' => array('Danika Worthington', 'dworthington@denverpost.com', 'Dani_Worth'),
+	'mschrader' => array('Megan Schrader', 'mschrader@denverpost.com', 'meganschrader'),
 );
 
 // Raw code for byline format for nersletter templates
