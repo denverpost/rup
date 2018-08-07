@@ -10,18 +10,7 @@ require_once './variables.php';
 require_once './constants.php';
 
 // Bylines listed in the dropdown are added and removed here **HC**
-$bylines = array(
-	'none' => array('No byline',false,false),
-	'dschneider' => array('Daniel J. Schneider', 'dschneider@denverpost.com', 'schneidan'),
-	'acrawford' => array('Adrian Crawford', 'acrawford@denverpost.com', 'Crawf33'),
-	'jrubino' => array('Joe Rubino', 'jrubino@denverpost.com', 'RubinoJC'),
-	'jnguyen' => array('Joe Nguyen', 'jnguyen@denverpost.com', 'JoeNguyen'),
-	'ehernandez' => array('Elizabeth Hernandez', 'ehernandez@denverpost.com', 'ehernandez'),
-	'jpaul' => array('Jesse Paul', 'jpaul@denverpost.com', 'JesseAPaul'),
-	'sgrant' => array('Sara Grant', 'sgrant@denverpost.com', 'ItsMeSaraG'),
-	'dworthington' => array('Danika Worthington', 'dworthington@denverpost.com', 'Dani_Worth'),
-	'mschrader' => array('Megan Schrader', 'mschrader@denverpost.com', 'meganschrader'),
-);
+$bylines = file('bylines.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 // Raw code for byline format for nersletter templates
 $byline_raw = '<p style="-ms-text-size-adjust:100%%;-webkit-text-size-adjust:100%%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By %1$s
