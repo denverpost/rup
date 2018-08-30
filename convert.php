@@ -10,9 +10,9 @@ require_once './variables.php';
 //require_once './constants.php';
 
 // Bylines listed in the dropdown are added and removed here
-$bylines_raw = file('bylines.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$bylines_original = file('bylines.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 $bylines = [];
-foreach ( $bylines_raw as $item ):
+foreach ( $bylines_original as $item ):
 	// There are four fields in a byline record, which will look something like this:
 	// acrawford,'Adrian Crawford','acrawford@denverpost.com','Crawf33'
 	// We want to turn it into a keyed array like this:
@@ -74,7 +74,7 @@ function add_quote_styles($inputstring) {
 // Replaces Wordpress image [caption] shorcodes with caption data with normal HTML
 function format_images_without_captions($inputstring) {
 	if (preg_match('/^<img\s.*?\bsrc="(.*?)".*?>/si', $inputstring)) {
-		return preg_replace('/^<img\s.*?\bsrc="(.*?)".*?>/si', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>', $inputstring);
+		return preg_replace('/^<img\s.*?\bsrc="(.*?)".*?>/si', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; width:100%;line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>', $inputstring);
 	} else {
 		return $inputstring;
 	}
@@ -83,7 +83,7 @@ function format_images_without_captions($inputstring) {
 // Replaces Wordpress image [caption] shorcodes WITHOUT caption data with normal HTML
 function format_images_with_captions($inputstring) {
 	if (preg_match('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', $inputstring)) {
-		return preg_replace('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>'."\r\n".'<p style="font-size:0.85em;color:#595959;margin-top:.5em;font-style:italic;">$2</p>', $inputstring);
+		return preg_replace('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; width:100%;line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>'."\r\n".'<p style="font-size:0.85em;color:#595959;margin-top:.5em;font-style:italic;">$2</p>', $inputstring);
 	} else {
 		return $inputstring;
 	}
@@ -195,9 +195,9 @@ if (!empty($_POST)) {
 		$newsletter_date = date("Ymd");
 	}
 	//build the filename 
-	$filename = $template.'-'.$newsletter_date.'.html';
-	if (!file_exists('./cache/'.$filename)) {
-		touch('./cache/'.$filename);
+	$filename = $template . '-' . $newsletter_date.'.html';
+	if (!file_exists('./cache/' . $filename)) {
+		touch('./cache/' . $filename);
 	}
 	// Assemble the byline HTML block from pieces in
 	$byline_text = ( $bylines[$author] && $bylines[$author][2] !== false ) ? sprintf(
