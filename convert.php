@@ -74,7 +74,7 @@ function add_quote_styles($inputstring) {
 // Replaces Wordpress image [caption] shorcodes with caption data with normal HTML
 function format_images_without_captions($inputstring) {
 	if (preg_match('/^<img\s.*?\bsrc="(.*?)".*?>/si', $inputstring)) {
-		return preg_replace('/^<img\s.*?\bsrc="(.*?)".*?>/si', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; width:100%;line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>', $inputstring);
+		return preg_replace('/^<img\s.*?\bsrc="(.*?)".*?>/si', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>', $inputstring);
 	} else {
 		return $inputstring;
 	}
@@ -83,7 +83,7 @@ function format_images_without_captions($inputstring) {
 // Replaces Wordpress image [caption] shorcodes WITHOUT caption data with normal HTML
 function format_images_with_captions($inputstring) {
 	if (preg_match('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', $inputstring)) {
-		return preg_replace('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; width:100%;line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>'."\r\n".'<p style="font-size:0.85em;color:#595959;margin-top:.5em;font-style:italic;">$2</p>', $inputstring);
+		return preg_replace('/^\[cap.*\].+?src="(.+?)".+?>(.+?)\[\/cap.*\]$/', '<center>'."\r\n".'<p style="text-align: center;margin:0;padding:0;">'."\r\n".'<img src="$1" aria-hidden="true" width="100%" border="0" style="height: auto; background: #ffffff; font-family: sans-serif; width:100%;font-size: 15px; line-height: 100%; color: #555555;display:block;">'."\r\n".'</p>'."\r\n".'</center>'."\r\n".'<p style="font-size:0.85em;color:#595959;margin-top:.5em;font-style:italic;">$2</p>', $inputstring);
 	} else {
 		return $inputstring;
 	}
@@ -182,6 +182,14 @@ function add_ads($inputstring,$template,$template_ads) {
 	return $inputstring;
 }
 
+function str_replace_first($from, $to, $content)
+{
+	// Cribbed from https://stackoverflow.com/questions/1252693/using-str-replace-so-that-it-only-acts-on-the-first-match
+    $from = '/'.preg_quote($from, '/').'/';
+
+    return preg_replace($from, $to, $content, 1);
+}
+
 // If the form was submitted and there's input to operate on...
 if (!empty($_POST)) {
 	// Get the POST stuff
@@ -214,19 +222,32 @@ if (!empty($_POST)) {
 
 		// Convert down-endashes to emdashes
 		$finished_html = str_replace('--', '–', $input_text);
-		// Replace H3 tags with H3 tags
-		$finished_html = str_replace('<h3>', '<h2>', $finished_html);
-		$finished_html = str_replace('</h3>', '</h2>', $finished_html);
+		
+		// Newsletter-specific edits
+		switch ( $template ):
+			case 'spot':
+				// We want one 'main' h2 element, the first h2 on the page.
+				$finished_html = str_replace_first('<h2>', '<h2 style="font-size:2em; line-height: 115%; margin-bottom: .17em;">', $finished_html);
+				// We want these styles to apply to all h3's and h4's.
+				$finished_html = str_replace('<h3>', '<h3 style="font-size:.95em; color:#3e009f;">', $finished_html);
+				$finished_html = str_replace('<h4>', '<h4 style="padding-top:1.5em; border-top:1px solid #ccc;">', $finished_html);
+				break;
+			default:
+				// Replace H3 tags with H2 tags why???
+				$finished_html = str_replace('<h3>', '<h2>', $finished_html);
+				$finished_html = str_replace('</h3>', '</h2>', $finished_html);
+		endswitch;
+
 		// Delete this junk elements Wordpress throws all over sometimes when editing in visual mode
 		$finished_html = str_replace('<div class="mceTemp"></div>', "\n", $finished_html);
 		// Go through and do a lot of stuff
 		$finished_html = go_through_grafs($finished_html);
 		// Run the Wordpress-borrowed paragraph creation tools
 		$finished_html = wpautop($finished_html);
-		// Sadd inline CSS to blockquotes and links
+		// Add inline CSS to blockquotes and links
 		$finished_html = add_quote_styles($finished_html);
 		$finished_html = add_link_styles($finished_html,$templates[$template]['link_style']);
-		// Insert ads
+		// Insert ads after each of the H2's.
 		$finished_html = add_ads($finished_html,$template,$templates[$template]);
 
 	}
@@ -237,7 +258,7 @@ if (!empty($_POST)) {
 		$finished_html = $template_raw;
 	}
 	// Save the file
-	if ($finished_html != false) { file_put_contents('./cache/'.$filename, $finished_html); }
+	if ($finished_html != false) { file_put_contents('./cache/' . $filename, $finished_html); }
 }
 
 ?><!DOCTYPE html>
