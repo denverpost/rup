@@ -12,11 +12,16 @@ require_once('./format.php');
 
 // Here's the bylines for creating a Roundup the old way
 $bylines = array(
-	'schneider' => array(
-		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Daniel J. Schneider
-                    <br /><a href="mailto:dschneider@denverpost.com?subject=Roundup%20Feedback" title="Email Daniel J. Schneider @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">dschneider@denverpost.com</a> / <a href="https://twitter.com/schneidan" title="@schneidan on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@schneidan</a></p>',
+	'fries' => array(
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Tynin Fries
+                    <br /><a href="mailto:tfries@denverpost.com?subject=Roundup%20Feedback" title="Email Tynin Fries @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">tfries@denverpost.com</a> / <a href="https://twitter.com/TyninFries" title="@TyninFries on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@TyninFries</a></p>',
 		'correx' => '<h2>Get in Touch</h2>
-                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:dschneider@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at dschneider@denverpost.com</a> or <a href="https://twitter.com/schneidan" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:tfries@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at tfries@denverpost.com</a> or <a href="https://twitter.com/TyninFries" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
+	'schubert' => array(
+		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Matt Schubert
+                    <br /><a href="mailto:mschubert@denverpost.com?subject=Roundup%20Feedback" title="Email Tynin Fries @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">mschubert@denverpost.com</a> / <a href="https://twitter.com/MattDSchubert" title="@MattDSchubert on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@MattDSchubert</a></p>',
+		'correx' => '<h2>Get in Touch</h2>
+                  	<p>Remember, if you see something that doesn\'t look right or just have a comment, thought or suggestion, <a href="mailto:mschubert@denverpost.com?subject=Roundup Feedback" style="color:#CE4815;font-weight:bold;text-decoration:none;">email me at mschubert@denverpost.com</a> or <a href="https://twitter.com/MattDSchubert" style="color:#CE4815;font-weight:bold;text-decoration:none;">yell at me on Twitter</a>.</p>'),
 	'crawford' => array(
 		'byline' => '<p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By Adrian Crawford
                     <br /><a href="mailto:acrawford@denverpost.com?subject=Roundup%20Feedback" title="Email Adrian Crawford @ The Denver Post" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">acrawford@denverpost.com</a> / <a href="https://twitter.com/Crawf33" title="@Crawf33 on Twitter" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;border-bottom-style:none;position:relative;margin-top:.67em;margin-bottom:.67em;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-decoration:none;color:#1670A3!important;">@Crawf33</a></p>',
@@ -85,8 +90,8 @@ function source_span($input) {
 
 // Setup for OneTab processing
 $link_count = 0;
-$schcheck = 'checked';
-$hercheck = $cracheck = $rubcheck = $ngucheck = '';
+$schcheck = '';
+$fricheck = $hercheck = $cracheck = $rubcheck = $ngucheck = '';
 $file = (isset($_GET['file'])) ? $_GET['file'] : false;
 $links_processed = $input_text = $blank = $byline_text_file = $content_text_file = $intro_text_file = $sotd_text_file = $playlist_text_file = $correx_text_file = false;
 
@@ -362,7 +367,8 @@ if ($blank == true || !empty($_POST)) {
 							<fieldset>
 								<legend> Author </legend>
 								<?php if (!$byline_text_file) { ?>
-								<input type="radio" name="authors" value="schneider" <?php echo $schcheck; ?>> Daniel J. Schneider<br />
+								<input type="radio" name="authors" value="fries" <?php echo $fricheck; ?>> Tynin Fries<br />
+								<input type="radio" name="authors" value="schubert" <?php echo $schcheck; ?>> Matt Schubert<br />
 								<input type="radio" name="authors" value="crawford" <?php echo $cracheck; ?>> Adrian Crawford<br />
 								<input type="radio" name="authors" value="hernandez" <?php echo $hercheck; ?>> Elizabeth Hernandez<br />
 								<input type="radio" name="authors" value="rubino" <?php echo $rubcheck; ?>> Joe Rubino<br />
