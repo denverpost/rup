@@ -9,8 +9,18 @@ require_once './yt-thumb.php';
 require_once './variables.php';
 require_once './constants.php';
 
-// Bylines listed in the dropdown are added and removed here **HC**
-$bylines = file('bylines.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+// Bylines listed in the dropdown are added and removed here
+$bylines_raw = file('bylines.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+function process_bylines($byline) {
+	// There are four fields in a byline record, which will look something like this:
+	// acrawford,'Adrian Crawford','acrawford@denverpost.com','Crawf33'
+	// We want to turn it into a keyed array like this:
+	// 'acrawford' => array('Adrian Crawford', 'acrawford@denverpost.com', 'Crawf33'),
+	if ( $byline[2] === 'false' ) $byline[2] = false;
+	if ( $byline[3] === 'false' ) $byline[3] = false;
+	return $byline[0] => array($byline[1], $byline[2], $byline[3]);
+}
+$bylines = array_map('process_bylines', $bylines_raw);
 
 // Raw code for byline format for nersletter templates
 $byline_raw = '<p style="-ms-text-size-adjust:100%%;-webkit-text-size-adjust:100%%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By %1$s
