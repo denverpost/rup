@@ -7,21 +7,21 @@ ini_set('display_errors', 1);
 require_once './wp-funcs.php';
 require_once './yt-thumb.php';
 require_once './variables.php';
-require_once './constants.php';
+//require_once './constants.php';
 
-// Bylines listed in the dropdown are added and removed here **HC**
-$bylines = array(
-	'none' => array('No byline',false,false),
-	'acrawford' => array('Adrian Crawford', 'acrawford@denverpost.com', 'Crawf33'),
-	'jrubino' => array('Joe Rubino', 'jrubino@denverpost.com', 'RubinoJC'),
-	'jnguyen' => array('Joe Nguyen', 'jnguyen@denverpost.com', 'JoeNguyen'),
-	'ehernandez' => array('Elizabeth Hernandez', 'ehernandez@denverpost.com', 'ehernandez'),
-	'sgrant' => array('Sara Grant', 'sgrant@denverpost.com', 'ItsMeSaraG'),
-	'dworthington' => array('Danika Worthington', 'dworthington@denverpost.com', 'Dani_Worth'),
-	'mschrader' => array('Megan Schrader', 'mschrader@denverpost.com', 'meganschrader'),
-	'tfries' => array('Tynin Fries', 'tfries@denverpost.com', 'TyninFries'),
-	'mschubert' => array('Matt Schubert', 'mschubert@denverpost.com', 'MattDSchubert'),
-);
+// Bylines listed in the dropdown are added and removed here
+$bylines_original = file('bylines.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$bylines = [];
+foreach ( $bylines_original as $item ):
+	// There are four fields in a byline record, which will look something like this:
+	// acrawford,'Adrian Crawford','acrawford@denverpost.com','Crawf33'
+	// We want to turn it into a keyed array like this:
+	// 'acrawford' => array('Adrian Crawford', 'acrawford@denverpost.com', 'Crawf33'),
+	$byline = explode(',', $item);
+	if ( $byline[2] === 'false' ) $byline[2] = false;
+	if ( $byline[3] === 'false' ) $byline[3] = false;
+	$bylines[$byline[0]] = array($byline[1], $byline[2], $byline[3]);
+endforeach;
 
 // Raw code for byline format for nersletter templates
 $byline_raw = '<p style="-ms-text-size-adjust:100%%;-webkit-text-size-adjust:100%%;text-transform:uppercase;font-weight:700;color:maroon;mso-line-height-rule:exactly;font-size:14px;line-height:1.5em;">By %1$s
@@ -182,6 +182,14 @@ function add_ads($inputstring,$template,$template_ads) {
 	return $inputstring;
 }
 
+function str_replace_first($from, $to, $content)
+{
+	// Cribbed from https://stackoverflow.com/questions/1252693/using-str-replace-so-that-it-only-acts-on-the-first-match
+    $from = '/'.preg_quote($from, '/').'/';
+
+    return preg_replace($from, $to, $content, 1);
+}
+
 // If the form was submitted and there's input to operate on...
 if (!empty($_POST)) {
 	// Get the POST stuff
@@ -195,9 +203,9 @@ if (!empty($_POST)) {
 		$newsletter_date = date("Ymd");
 	}
 	//build the filename 
-	$filename = $template.'-'.$newsletter_date.'.html';
-	if (!file_exists('./cache/'.$filename)) {
-		touch('./cache/'.$filename);
+	$filename = $template . '-' . $newsletter_date.'.html';
+	if (!file_exists('./cache/' . $filename)) {
+		touch('./cache/' . $filename);
 	}
 	// Assemble the byline HTML block from pieces in
 	$byline_text = ( $bylines[$author] && $bylines[$author][2] !== false ) ? sprintf(
@@ -214,19 +222,33 @@ if (!empty($_POST)) {
 
 		// Convert down-endashes to emdashes
 		$finished_html = str_replace('--', '–', $input_text);
-		// Replace H3 tags with H3 tags
-		$finished_html = str_replace('<h3>', '<h2>', $finished_html);
-		$finished_html = str_replace('</h3>', '</h2>', $finished_html);
+		
+		// Newsletter-specific edits
+		switch ( $template ):
+			case 'spot':
+				// We want one 'main' h2 element, the first h2 on the page.
+				$finished_html = str_replace_first('<h2>', '<h2 style="font-size:2em; line-height: 115%; margin-bottom: .17em;">', $finished_html);
+				// The rest of the h2's look like this.
+				$finished_html = str_replace('<h2>', '<h2 style="color: #3e009f; padding-top:1.5em; border-top:1px solid #ccc;">', $finished_html);
+				// We want these styles to apply to all h3's.
+				$finished_html = str_replace('<h3>', '<h3 style="font-size:.95em; color:#3e009f;">', $finished_html);
+				break;
+			default:
+				// Replace H3 tags with H2 tags why???
+				$finished_html = str_replace('<h3>', '<h2>', $finished_html);
+				$finished_html = str_replace('</h3>', '</h2>', $finished_html);
+		endswitch;
+
 		// Delete this junk elements Wordpress throws all over sometimes when editing in visual mode
 		$finished_html = str_replace('<div class="mceTemp"></div>', "\n", $finished_html);
 		// Go through and do a lot of stuff
 		$finished_html = go_through_grafs($finished_html);
 		// Run the Wordpress-borrowed paragraph creation tools
 		$finished_html = wpautop($finished_html);
-		// Sadd inline CSS to blockquotes and links
+		// Add inline CSS to blockquotes and links
 		$finished_html = add_quote_styles($finished_html);
 		$finished_html = add_link_styles($finished_html,$templates[$template]['link_style']);
-		// Insert ads
+		// Insert ads after each of the H2's.
 		$finished_html = add_ads($finished_html,$template,$templates[$template]);
 
 	}
@@ -237,12 +259,10 @@ if (!empty($_POST)) {
 		$finished_html = $template_raw;
 	}
 	// Save the file
-	if ($finished_html != false) { file_put_contents('./cache/'.$filename, $finished_html); }
+	if ($finished_html != false) { file_put_contents('./cache/' . $filename, $finished_html); }
 }
 
-?>
-
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <head>
 	<title>Wordpress-to-HTML Email newsletter converter</title>
     <meta name="robots" content="noindex">
