@@ -229,9 +229,9 @@ if (!empty($_POST)) {
 				// We want one 'main' h2 element, the first h2 on the page.
 				$finished_html = str_replace_first('<h2>', '<h2 style="font-size:2em; line-height: 115%; margin-bottom: .17em;">', $finished_html);
 				// The rest of the h2's look like this.
-				$finished_html = str_replace('<h2>', '<h2 style="color: #3e009f; padding-top:1.5em; border-top:1px solid #ccc;">', $finished_html);
+				$finished_html = str_replace('<h2>', '<h2 style="padding-top:1.5em; border-top:1px solid #ccc;">', $finished_html);
 				// We want these styles to apply to all h3's.
-				$finished_html = str_replace('<h3>', '<h3 style="font-size:.95em; color:#3e009f;">', $finished_html);
+				$finished_html = str_replace('<h3>', '<h3 style="font-size:1.25em; color:#3e009f; padding-top:1.5em; border-top:1px solid #ccc;">', $finished_html);
 				break;
 			default:
 				// Replace H3 tags with H2 tags why???
