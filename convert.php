@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 require_once './wp-funcs.php';
 require_once './yt-thumb.php';
 require_once './variables.php';
-//require_once './constants.php';
+require_once './constants.php';
 
 // Bylines listed in the dropdown are added and removed here
 $bylines_original = file('bylines.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
