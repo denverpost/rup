@@ -32,7 +32,7 @@ $author = $newsletter_date = $filename = $template = $input_text = $finished_htm
 
 // Just FTPs to Extras
 function do_ftp($files) {
-    $conn_id = ftp_connect(FTP_SERVER) or die("Couldn't connect to $ftp_server");
+    $conn_id = ftp_connect(FTP_SERVER) or die("Couldn't connect to " . FTP_SERVER);
     ftp_login($conn_id,FTP_USER_NAME,FTP_USER_PASS);
     ftp_pasv($conn_id, TRUE);    
     if ($files) {
