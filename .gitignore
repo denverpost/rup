@@ -3,3 +3,8 @@
 cache/*
 !cache/.gitkeep
 constants.php
+.idea/misc.xml
+.idea/modules.xml
+.idea/rup.iml
+.idea/workspace.xml
+.idea/workspace.xml
