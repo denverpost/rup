@@ -34,7 +34,7 @@ $author = $newsletter_date = $filename = $template = $input_text = $finished_htm
 function do_ftp($files) {
     $conn_id = ftp_connect(FTP_SERVER) or die("Couldn't connect to " . FTP_SERVER);
     ftp_login($conn_id,FTP_USER_NAME,FTP_USER_PASS);
-    ftp_pasv($conn_id, TRUE);    
+    ftp_pasv($conn_id, TRUE);
     if ($files) {
         if (ftp_put($conn_id, FTP_DIRECTORY.'/screenshots/'.$files, './temp/'.$files, FTP_BINARY)) {
             unlink('./temp/'.$files);
@@ -157,10 +157,11 @@ function go_through_grafs($inputstring) {
 
 // Ads in the appropriate ad tags (found in variables.php)
 function add_ads($inputstring,$template,$template_ads) {
-	// Only looking ofr H2 tags
-	$heading_pattern = "/<h2>(.+?)<\/h2>/";
+    $smartSpeakerAd = '<div style="width:100%;padding-top:20px;background-color:white;color:black;border-top:3px solid black;border-bottom:3px solid black;margin-top:50px;margin-bottom:50px"> <table style="width:100%;"> <tr> <td></td> <td colspan="3" style="white-space: nowrap;"> <div style="font-size:30px;text-align:center;">The Denver Post<br/><span style="text-align:center;font-size:16px">Now on smart speakers!<br/><a href="https://www.denverpost.com/smart-speaker-setup/" style="">Learn More</a></span></div> </td> <td></td></tr> <tr> <td style="width: 1px;white-space: nowrap;"> <img style="max-width:80px;float:left;margin-left:10px;margin-top:10px;" src="https://extras.denverpost.com/connext_assets/home.png"> </td> <td colspan="3"><div style="display:none;">The Denver Post<br/><span style="text-align:center;font-size:16px">Now on smart speakers!<br/><a href="https://www.denverpost.com/smart-speaker-setup/" style="">Learn More</a></span></div></td> <td style="width: 1px;white-space: nowrap;"> <img style="max-width:80px;float:right;margin-right:10px;margin-top:10px" src="https://extras.denverpost.com/connext_assets/alexa.png"/> </td> </tr> <tr> <td colspan="2"> <div style="color:black;background:white;border-radius:10px;padding:5px;margin-left:5px">“Hey Google, talk to The Denver Post”</div> </td> <td ><div style="display:none;">The Denver Post<br/><span style="text-align:center;font-size:16px">Now on smart speakers!<br/><a href="https://www.denverpost.com/smart-speaker-setup/" style="">Learn More</a></span></div></td> <td colspan="2"> <div style="color:black;background:white;border-radius:10px;padding:5px;margin-right:5px">“Alexa, open Denver Post”</div> </td> </tr> </table> </div>';
+	// Only looking off H2 tags
+	$heading_pattern = "/<h3>(.+?)<\/h3>/";
 	preg_match_all($heading_pattern, $inputstring, $matches);
-	$ad_one = $template_ads['ad_one']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
+	$ad_one = $template_ads['ad_one']."\n".'<span style="display:block;height:1em;width:100%;"></span>'.$smartSpeakerAd;
 	$ad_two = $template_ads['ad_two']."\n".'<span style="display:block;height:1em;width:100%;"></span>';
 	// which H2 tags to place ads BEFORE based on how many there are
 	$place_one = (count($matches[0]) <= 3) ? 1 : 2;
@@ -202,7 +203,7 @@ if (!empty($_POST)) {
 	} else {
 		$newsletter_date = date("Ymd");
 	}
-	//build the filename 
+	//build the filename
 	$filename = $template . '-' . $newsletter_date.'.html';
 	if (!file_exists('./cache/' . $filename)) {
 		touch('./cache/' . $filename);
@@ -222,7 +223,7 @@ if (!empty($_POST)) {
 
 		// Convert down-endashes to emdashes
 		$finished_html = str_replace('--', '–', $input_text);
-		
+
 		// Newsletter-specific edits
 		switch ( $template ):
 			case 'spot':
@@ -233,6 +234,18 @@ if (!empty($_POST)) {
 				// We want these styles to apply to all h3's.
 				$finished_html = str_replace('<h3>', '<h3 style="font-size:1.25em; color:#3e009f; padding-top:1.5em; border-top:1px solid #ccc;">', $finished_html);
 				break;
+            case 'ontheblock':
+                //remove the logo, if no logo is present it will still remove the first image ¯\_(ツ)_/¯
+                $finished_html = preg_replace('/<img([\w\W]+?)[\/]?>/', '', $finished_html,1);
+                break;
+            case 'premium':
+                //remove the logo, if no logo is present it will still remove the first image ¯\_(ツ)_/¯
+                $finished_html = preg_replace('/<img([\w\W]+?)[\/]?>/', '', $finished_html,1);
+                break;
+            case 'checkup':
+                //remove the logo, if no logo is present it will still remove the first image ¯\_(ツ)_/¯
+                $finished_html = preg_replace('/<img([\w\W]+?)[\/]?>/', '', $finished_html,1);
+                break;
 			default:
 				// Replace H3 tags with H2 tags why???
 				$finished_html = str_replace('<h3>', '<h2>', $finished_html);
@@ -250,7 +263,6 @@ if (!empty($_POST)) {
 		$finished_html = add_link_styles($finished_html,$templates[$template]['link_style']);
 		// Insert ads after each of the H2's.
 		$finished_html = add_ads($finished_html,$template,$templates[$template]);
-
 	}
 	//Insert the Byline and Content elements into the raw template HTML
 	if ($template && $finished_html) {
@@ -334,7 +346,7 @@ if (!empty($_POST)) {
 										foreach ($templates as $key => $values) {
 											$selected = ($template && $key == $template) ? ' selected' : '';
 											echo '<option value="' . $key . '"' . $selected . '>' . $values['name'] . '</option>';
-										} 
+										}
 										unset($selected);
 										?>
 									</select>

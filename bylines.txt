@@ -2,7 +2,6 @@ none,No byline,false,false
 jrubino,Joe Rubino,jrubino@denverpost.com,RubinoJC
 jnguyen,Joe Nguyen,jnguyen@denverpost.com,JoeNguyen
 ehernandez,Elizabeth Hernandez,ehernandez@denverpost.com,ehernandez
-sgrant,Sara Grant,sgrant@denverpost.com,ItsMeSaraG
 dworthington,Danika Worthington,dworthington@denverpost.com,Dani_Worth
 mschrader,Megan Schrader,mschrader@denverpost.com,meganschrader
 mschubert,Matt Schubert,mschubert@denverpost.com,MattDSchubert
@@ -15,3 +14,4 @@ dboniface,Daniel Boniface,dboniface@denverpost.com,danielboniface
 cbrubaker,Chris Brubaker,cbrubaker@denverpost.com,false
 mchambers,Mike Chambers,mchambers@denverpost.com,mikechambers
 msinger, Mike Singer,msinger@denverpost.com,msinger
+jwenzel, John Wenzel,jwenzel@denverpost.com,johnwenzel
